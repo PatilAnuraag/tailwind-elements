@@ -15,6 +15,7 @@ type SelectContextType = {
   setHighlightedIndex: React.Dispatch<React.SetStateAction<number>>;
   itemsRef: React.MutableRefObject<Map<string, HTMLDivElement>>;
   variant: "default" | "neobrutalism";
+  disabled: boolean;
 };
 
 const SelectContext = React.createContext<SelectContextType | null>(null);
@@ -32,6 +33,7 @@ interface SelectProps {
   onValueChange?: (value: string) => void;
   defaultValue?: string;
   name?: string;
+  disabled?: boolean;
 }
 
 const Select = ({
@@ -40,6 +42,7 @@ const Select = ({
   onValueChange: controlledOnValueChange,
   defaultValue,
   name,
+  disabled = false,
 }: SelectProps) => {
   const [uncontrolledValue, setUncontrolledValue] = React.useState(defaultValue || "");
   const [open, setOpen] = React.useState(false);
@@ -89,7 +92,8 @@ const Select = ({
         highlightedIndex,
         setHighlightedIndex,
         itemsRef,
-        variant
+        variant,
+        disabled
       }}
     >
       <div ref={selectRef} className="relative inline-block w-full">
@@ -147,9 +151,10 @@ interface SelectTriggerProps
 
 const SelectTrigger = React.forwardRef<HTMLButtonElement, SelectTriggerProps>(
   ({ className, children, variant, ...props }, ref) => {
-  const { open, setOpen } = useSelect();
+  const { open, setOpen, disabled } = useSelect();
   
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (disabled) return;
     if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault();
       setOpen(true);
@@ -160,10 +165,11 @@ const SelectTrigger = React.forwardRef<HTMLButtonElement, SelectTriggerProps>(
     <button
       ref={ref}
       type="button"
-      onClick={() => setOpen(!open)}
+      onClick={() => !disabled && setOpen(!open)}
       onKeyDown={handleKeyDown}
       aria-expanded={open}
       aria-haspopup="listbox"
+      disabled={disabled || props.disabled}
       className={cn(selectTriggerVariants({ variant, className }))}
       {...props}
     >

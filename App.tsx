@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   User, Bell, Layout, Moon, Sun, ArrowRight, Layers, Palette, Accessibility, 
   Code, Eye, FileText, List, Box, Tag, AlertCircle, CheckSquare, AlignLeft, Image as ImageIcon,
-  Sliders, RadioReceiver, ToggleLeft, MessageSquare, Divide, Loader2, PenTool, BookOpen, MousePointerClick, Plus, Info, AlertTriangle
+  Sliders, RadioReceiver, ToggleLeft, MessageSquare, Divide, Loader2, PenTool, BookOpen, MousePointerClick, Plus, Info, AlertTriangle, X, Check, Search, Settings, MoreHorizontal, CreditCard, Star
 } from 'lucide-react';
 import { Button } from './components/ui/button';
 import {
@@ -47,13 +47,29 @@ import { cn } from "./lib/utils";
 
 const BUTTON_CODE = `
 <div className="flex flex-wrap items-center gap-4">
-  <Button>Default</Button>
-  <Button variant="shine">Shine</Button>
-  <Button variant="link-hover">Hover Link</Button>
-  <Button variant="neobrutalism">Neo</Button>
+  {/* Standard Variants */}
+  <Button variant="default">Default</Button>
+  <Button variant="secondary">Secondary</Button>
+  <Button variant="destructive">Destructive</Button>
+  <Button variant="outline">Outline</Button>
+  <Button variant="ghost">Ghost</Button>
+  <Button variant="link">Link</Button>
+
+  {/* Special Effects */}
+  <Button variant="shine">Shine Effect</Button>
+  <Button variant="link-hover">Animated Link</Button>
   <Button variant="gradient" shape="pill">Gradient Pill</Button>
-  <Button variant="soft">Soft</Button>
-  <Button variant="outline" shape="square">Square</Button>
+  <Button variant="neobrutalism">Neobrutalism</Button>
+  <Button variant="soft">Soft UI</Button>
+
+  {/* Sizes */}
+  <Button size="sm">Small</Button>
+  <Button size="lg">Large</Button>
+  <Button size="icon"><Plus /></Button>
+  
+  {/* States */}
+  <Button isLoading>Loading</Button>
+  <Button disabled>Disabled</Button>
 </div>
 `.trim();
 
@@ -128,14 +144,27 @@ const DIALOG_DETAILS = (
 );
 
 const SWITCH_CODE = `
-// Basic usage
-<div className="flex items-center justify-between">
-  <label htmlFor="mode">Airplane Mode</label>
-  <Switch id="mode" />
-</div>
+<div className="space-y-4">
+  <div className="flex items-center space-x-2">
+    <Switch id="airplane-mode" />
+    <Label htmlFor="airplane-mode">Airplane Mode</Label>
+  </div>
+  
+  <div className="flex items-center space-x-2">
+    <Switch id="neo-mode" variant="neobrutalism" />
+    <Label htmlFor="neo-mode">Neobrutalism</Label>
+  </div>
 
-// Neobrutalism Variant
-<Switch variant="neobrutalism" />
+  <div className="flex items-center space-x-2">
+    <Switch id="small-mode" size="sm" />
+    <Label htmlFor="small-mode">Compact</Label>
+  </div>
+
+   <div className="flex items-center space-x-2">
+    <Switch id="disabled-mode" disabled />
+    <Label htmlFor="disabled-mode">Disabled</Label>
+  </div>
+</div>
 `.trim();
 
 const SWITCH_DETAILS = (
@@ -160,18 +189,37 @@ const SWITCH_DETAILS = (
 );
 
 const SELECT_CODE = `
-<Select value={role} onValueChange={setRole}>
-  <SelectTrigger className="w-full" variant="neobrutalism">
-    <SelectValue placeholder="Select a role" />
-  </SelectTrigger>
-  <SelectContent variant="neobrutalism">
-    <SelectGroup>
-      <SelectLabel>Engineering</SelectLabel>
-      <SelectItem value="dev">Developer</SelectItem>
-      <SelectItem value="qa">QA</SelectItem>
-    </SelectGroup>
-  </SelectContent>
-</Select>
+<div className="grid gap-4">
+  {/* Default */}
+  <Select>
+    <SelectTrigger className="w-[180px]">
+      <SelectValue placeholder="Theme" />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="light">Light</SelectItem>
+      <SelectItem value="dark">Dark</SelectItem>
+      <SelectItem value="system">System</SelectItem>
+    </SelectContent>
+  </Select>
+
+  {/* Neobrutalism */}
+  <Select>
+    <SelectTrigger className="w-[180px]" variant="neobrutalism">
+      <SelectValue placeholder="Style" />
+    </SelectTrigger>
+    <SelectContent variant="neobrutalism">
+      <SelectItem value="bold">Bold</SelectItem>
+      <SelectItem value="outline">Outline</SelectItem>
+    </SelectContent>
+  </Select>
+  
+  {/* Disabled */}
+  <Select disabled>
+    <SelectTrigger className="w-[180px]">
+      <SelectValue placeholder="Disabled" />
+    </SelectTrigger>
+  </Select>
+</div>
 `.trim();
 
 const SELECT_DETAILS = (
@@ -302,12 +350,18 @@ const ACCORDION_DETAILS = (
 );
 
 const BADGE_CODE = `
-<div className="flex gap-2">
-  <Badge>Default</Badge>
+<div className="flex flex-wrap gap-2">
+  <Badge variant="default">Default</Badge>
+  <Badge variant="secondary">Secondary</Badge>
   <Badge variant="neutral">Neutral</Badge>
-  <Badge variant="soft-success">Soft Success</Badge>
-  <Badge variant="neobrutalism">Neo</Badge>
   <Badge variant="outline">Outline</Badge>
+  <Badge variant="neobrutalism">Neo</Badge>
+  
+  {/* Semantic Soft Badges */}
+  <Badge variant="soft-success">Success</Badge>
+  <Badge variant="soft-warning">Warning</Badge>
+  <Badge variant="soft-destructive">Error</Badge>
+  <Badge variant="soft-info">Info</Badge>
 </div>
 `.trim();
 
@@ -328,24 +382,24 @@ const BADGE_DETAILS = (
 );
 
 const AVATAR_CODE = `
-<div className="flex gap-4">
+<div className="flex gap-4 items-end">
     {/* Circle (Default) */}
     <Avatar>
-      <AvatarImage src="..." />
+      <AvatarImage src="https://github.com/shadcn.png" />
       <AvatarFallback>CN</AvatarFallback>
     </Avatar>
     
     {/* Square */}
     <Avatar shape="square">
-      <AvatarImage src="..." />
-      <AvatarFallback>SQ</AvatarFallback>
+      <AvatarImage src="https://github.com/vercel.png" />
+      <AvatarFallback>VC</AvatarFallback>
     </Avatar>
     
     {/* Group */}
     <AvatarGroup>
-      <Avatar><AvatarFallback>A</AvatarFallback></Avatar>
-      <Avatar><AvatarFallback>B</AvatarFallback></Avatar>
-      <Avatar><AvatarFallback>+2</AvatarFallback></Avatar>
+      <Avatar><AvatarImage src="https://i.pravatar.cc/150?u=1" /></Avatar>
+      <Avatar><AvatarImage src="https://i.pravatar.cc/150?u=2" /></Avatar>
+      <Avatar><AvatarFallback>+5</AvatarFallback></Avatar>
     </AvatarGroup>
 </div>
 `.trim();
@@ -376,6 +430,14 @@ const ALERT_CODE = `
     </AlertDescription>
   </Alert>
 
+  <Alert variant="destructive">
+    <AlertCircle className="h-4 w-4" />
+    <AlertTitle>Error</AlertTitle>
+    <AlertDescription>
+      Something went wrong.
+    </AlertDescription>
+  </Alert>
+  
   <Alert variant="warning">
     <AlertTriangle className="h-4 w-4" />
     <AlertTitle>Warning</AlertTitle>
@@ -409,16 +471,31 @@ const ALERT_DETAILS = (
 );
 
 const RADIO_CODE = `
-<RadioGroup defaultValue="comfortable" variant="neobrutalism">
-  <div className="flex items-center space-x-2">
-    <RadioGroupItem value="default" id="r1" />
-    <Label htmlFor="r1">Default</Label>
-  </div>
-  <div className="flex items-center space-x-2">
-    <RadioGroupItem value="comfortable" id="r2" />
-    <Label htmlFor="r2">Comfortable</Label>
-  </div>
-</RadioGroup>
+<div className="flex flex-col gap-6">
+  {/* Default Vertical */}
+  <RadioGroup defaultValue="1">
+    <div className="flex items-center space-x-2">
+      <RadioGroupItem value="1" id="r1" />
+      <Label htmlFor="r1">Default</Label>
+    </div>
+    <div className="flex items-center space-x-2">
+      <RadioGroupItem value="2" id="r2" />
+      <Label htmlFor="r2">Comfortable</Label>
+    </div>
+  </RadioGroup>
+
+  {/* Horizontal Neobrutalism */}
+  <RadioGroup defaultValue="A" variant="neobrutalism" className="flex-row gap-4">
+    <div className="flex items-center space-x-2 border-2 border-foreground p-2 bg-background">
+      <RadioGroupItem value="A" id="ra" />
+      <Label htmlFor="ra">Option A</Label>
+    </div>
+    <div className="flex items-center space-x-2 border-2 border-foreground p-2 bg-background">
+      <RadioGroupItem value="B" id="rb" />
+      <Label htmlFor="rb">Option B</Label>
+    </div>
+  </RadioGroup>
+</div>
 `.trim();
 
 const RADIO_DETAILS = (
@@ -443,12 +520,27 @@ const RADIO_DETAILS = (
 );
 
 const SLIDER_CODE = `
-<Slider 
-  defaultValue={[25, 75]} 
-  max={100} 
-  step={1} 
-  variant="neobrutalism"
-/>
+<div className="space-y-8">
+  <div className="space-y-2">
+    <Label>Default (50%)</Label>
+    <Slider defaultValue={[50]} max={100} step={1} />
+  </div>
+
+  <div className="space-y-2">
+    <Label>Range (20% - 80%)</Label>
+    <Slider defaultValue={[20, 80]} max={100} step={1} />
+  </div>
+
+  <div className="space-y-2">
+     <Label>Neobrutalism</Label>
+     <Slider defaultValue={[60]} max={100} step={1} variant="neobrutalism" />
+  </div>
+  
+  <div className="space-y-2">
+     <Label>Thick Track</Label>
+     <Slider defaultValue={[40]} max={100} step={1} variant="thick" />
+  </div>
+</div>
 `.trim();
 
 const SLIDER_DETAILS = (
@@ -467,9 +559,23 @@ const SLIDER_DETAILS = (
 );
 
 const TOGGLE_CODE = `
-<Toggle aria-label="Toggle italic" variant="neobrutalism">
-  <Bold className="h-4 w-4" />
-</Toggle>
+<div className="flex gap-4 items-center">
+  <Toggle aria-label="Toggle italic">
+    <AlignLeft className="h-4 w-4" />
+  </Toggle>
+  
+  <Toggle variant="outline" aria-label="Toggle outline">
+    <Star className="h-4 w-4" />
+  </Toggle>
+  
+  <Toggle variant="neobrutalism" aria-label="Toggle neo">
+     <div className="font-bold">Neo</div>
+  </Toggle>
+  
+  <Toggle size="sm" aria-label="Small">
+     <span className="text-xs">Small</span>
+  </Toggle>
+</div>
 `.trim();
 
 const TOGGLE_DETAILS = (
@@ -489,11 +595,26 @@ const TOGGLE_DETAILS = (
 const POPOVER_CODE = `
 <Popover>
   <PopoverTrigger asChild>
-    <Button variant="outline">Open Popover</Button>
+    <Button variant="outline">Edit Settings</Button>
   </PopoverTrigger>
-  <PopoverContent variant="neobrutalism" className="w-80">
+  <PopoverContent className="w-80">
     <div className="grid gap-4">
-      {/* Popover content */}
+      <div className="space-y-2">
+        <h4 className="font-medium leading-none">Dimensions</h4>
+        <p className="text-sm text-muted-foreground">
+          Set the dimensions for the layer.
+        </p>
+      </div>
+      <div className="grid gap-2">
+        <div className="grid grid-cols-3 items-center gap-4">
+          <Label htmlFor="width">Width</Label>
+          <Input id="width" defaultValue="100%" className="col-span-2 h-8" />
+        </div>
+        <div className="grid grid-cols-3 items-center gap-4">
+          <Label htmlFor="height">Height</Label>
+          <Input id="height" defaultValue="25px" className="col-span-2 h-8" />
+        </div>
+      </div>
     </div>
   </PopoverContent>
 </Popover>
@@ -522,23 +643,38 @@ const POPOVER_DETAILS = (
 
 const COMPREHENSIVE_FORM_CODE = `
 <div className="space-y-6">
-  <FormItem>
-    <FormLabel>Name</FormLabel>
-    <FormControl>
-      <Input placeholder="John Doe" variant="material" />
-    </FormControl>
-  </FormItem>
+  <div className="grid grid-cols-2 gap-4">
+    <FormItem>
+      <FormLabel>Username</FormLabel>
+      <FormControl>
+        <Input placeholder="John Doe" />
+      </FormControl>
+    </FormItem>
+    <FormItem>
+       <FormLabel>Email (Material)</FormLabel>
+       <FormControl>
+         <Input placeholder="john@example.com" variant="material" />
+       </FormControl>
+    </FormItem>
+  </div>
 
   <FormItem>
-    <FormLabel>Bio</FormLabel>
+    <FormLabel>Bio (Filled)</FormLabel>
     <FormControl>
       <Textarea placeholder="Tell us more..." variant="filled" />
     </FormControl>
+    <FormDescription>This will be displayed on your profile.</FormDescription>
   </FormItem>
 
-  <div className="flex items-center space-x-2">
-    <Checkbox id="terms" variant="neobrutalism" />
-    <Label htmlFor="terms">Accept terms (Neo Checkbox)</Label>
+  <div className="grid grid-cols-2 gap-4">
+      <div className="flex items-center space-x-2 border p-4 rounded-md">
+        <Checkbox id="terms" variant="circle" />
+        <Label htmlFor="terms">Accept terms</Label>
+      </div>
+      <div className="flex items-center space-x-2 border-2 border-foreground p-4 bg-white dark:bg-black">
+        <Checkbox id="marketing" variant="neobrutalism" />
+        <Label htmlFor="marketing">Marketing emails</Label>
+      </div>
   </div>
 </div>
 `.trim();
@@ -565,13 +701,21 @@ const COMPREHENSIVE_FORM_DETAILS = (
 );
 
 const SEPARATOR_CODE = `
-<Separator className="my-4" variant="dashed" />
-<div className="flex h-5 items-center space-x-4 text-sm">
-  <div>Blog</div>
-  <Separator orientation="vertical" />
-  <div>Docs</div>
-  <Separator orientation="vertical" variant="dotted" />
-  <div>Source</div>
+<div className="w-full max-w-[300px] border p-4 rounded-lg bg-card text-card-foreground">
+    <div className="space-y-1">
+        <h4 className="text-sm font-medium leading-none">Settings</h4>
+        <p className="text-sm text-muted-foreground">Manage your preferences.</p>
+    </div>
+    <Separator className="my-4" />
+    <div className="flex h-5 items-center space-x-4 text-sm">
+        <div>Profile</div>
+        <Separator orientation="vertical" />
+        <div>Account</div>
+        <Separator orientation="vertical" variant="dotted" />
+        <div>Billing</div>
+    </div>
+    <Separator className="my-4" variant="dashed" />
+    <Button size="sm" variant="ghost" className="w-full">Save Changes</Button>
 </div>
 `.trim();
 
@@ -597,11 +741,15 @@ const SEPARATOR_DETAILS = (
 );
 
 const SKELETON_CODE = `
-<div className="flex items-center space-x-4">
-  <Skeleton variant="circle" className="h-12 w-12" />
-  <div className="space-y-2">
-    <Skeleton className="h-4 w-[250px]" />
-    <Skeleton className="h-4 w-[200px]" />
+<div className="flex items-start space-x-4">
+  <Skeleton variant="circle" className="h-10 w-10 shrink-0" />
+  <div className="space-y-2 w-full">
+    <Skeleton className="h-4 w-3/4" />
+    <Skeleton className="h-32 w-full rounded-md" /> {/* Simulating image/content */}
+    <div className="flex gap-2 pt-2">
+        <Skeleton className="h-3 w-12" />
+        <Skeleton className="h-3 w-12" />
+    </div>
   </div>
 </div>
 `.trim();
@@ -729,12 +877,8 @@ function ComponentShowcase({
 }
 
 export default function App() {
-  const [notifications, setNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
-  const [selectedRole, setSelectedRole] = useState("developer");
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const [radioVal, setRadioVal] = useState("comfortable");
-  const [loading, setLoading] = useState(false);
 
   const toggleTheme = () => {
     setDarkMode(!darkMode);
@@ -824,19 +968,43 @@ export default function App() {
               description="Interactive element for actions."
               code={BUTTON_CODE}
               details={BUTTON_DETAILS}
+              className="lg:col-span-2 xl:col-span-3"
             >
-              <div className="flex flex-wrap items-center justify-center gap-4">
-                <Button>Default</Button>
-                <Button variant="shine">Shine</Button>
-                <Button variant="link-hover">Hover Link</Button>
-                <Button variant="neobrutalism">Neo</Button>
-                <Button variant="gradient" shape="pill">Gradient</Button>
-                <Button variant="soft">Soft</Button>
-                <Button variant="outline" shape="square">Square</Button>
-                <Button variant="ghost">Ghost</Button>
-                <Button size="icon" variant="outline" aria-label="Icon Only Button">
-                   <Plus className="h-4 w-4" />
-                </Button>
+              <div className="flex flex-col gap-6 w-full items-center">
+                {/* Standard Variants */}
+                <div className="flex flex-wrap items-center justify-center gap-4">
+                    <Button variant="default">Default</Button>
+                    <Button variant="secondary">Secondary</Button>
+                    <Button variant="destructive">Destructive</Button>
+                    <Button variant="outline">Outline</Button>
+                    <Button variant="ghost">Ghost</Button>
+                    <Button variant="link">Link</Button>
+                </div>
+                <Separator className="w-1/2" />
+                {/* Special Styles */}
+                <div className="flex flex-wrap items-center justify-center gap-4">
+                   <Button variant="shine">Shine</Button>
+                   <Button variant="link-hover">Hover Link</Button>
+                   <Button variant="neobrutalism">Neobrutalism</Button>
+                   <Button variant="gradient" shape="pill">Gradient</Button>
+                   <Button variant="soft">Soft UI</Button>
+                </div>
+                <Separator className="w-1/2" />
+                 {/* Sizes & Shapes */}
+                <div className="flex flex-wrap items-center justify-center gap-4">
+                    <Button size="sm">Small</Button>
+                    <Button size="default">Default</Button>
+                    <Button size="lg">Large</Button>
+                    <Button size="icon" variant="outline" aria-label="Add"><Plus className="h-4 w-4" /></Button>
+                    <Button shape="pill" variant="outline">Pill Shape</Button>
+                    <Button shape="square" variant="outline">Square</Button>
+                </div>
+                 <Separator className="w-1/2" />
+                 {/* States */}
+                 <div className="flex flex-wrap items-center justify-center gap-4">
+                    <Button isLoading>Loading</Button>
+                    <Button disabled>Disabled</Button>
+                 </div>
               </div>
             </ComponentShowcase>
 
@@ -848,10 +1016,10 @@ export default function App() {
               code={DIALOG_CODE}
               details={DIALOG_DETAILS}
             >
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-col gap-4 w-full max-w-xs">
                 <Dialog>
                     <DialogTrigger asChild>
-                    <Button variant="default">Default</Button>
+                      <Button variant="default" className="w-full">Open Default Dialog</Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
@@ -865,7 +1033,7 @@ export default function App() {
 
                 <Dialog>
                     <DialogTrigger asChild>
-                    <Button variant="neobrutalism">Neo</Button>
+                      <Button variant="neobrutalism" className="w-full">Open Neobrutalism</Button>
                     </DialogTrigger>
                     <DialogContent variant="neobrutalism" className="sm:max-w-[425px]">
                     <DialogHeader>
@@ -874,6 +1042,23 @@ export default function App() {
                     </DialogHeader>
                     <div className="py-4"><p className="text-sm">Content goes here...</p></div>
                     <DialogFooter><Button variant="neobrutalism">Save</Button></DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
+                 <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="destructive" className="w-full">Open Destructive</Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle className="text-destructive flex items-center gap-2"><AlertTriangle className="h-5 w-5"/> Delete Account</DialogTitle>
+                        <DialogDescription>This action cannot be undone.</DialogDescription>
+                    </DialogHeader>
+                    <div className="py-4"><p className="text-sm">Are you sure you want to delete your account?</p></div>
+                    <DialogFooter>
+                        <Button variant="outline">Cancel</Button>
+                        <Button variant="destructive">Delete</Button>
+                    </DialogFooter>
                     </DialogContent>
                 </Dialog>
               </div>
@@ -887,14 +1072,22 @@ export default function App() {
               code={SWITCH_CODE}
               details={SWITCH_DETAILS}
             >
-              <div className="w-full space-y-6 max-w-[280px]">
-                <div className="flex items-center justify-between">
+              <div className="w-full space-y-4 max-w-[280px]">
+                <div className="flex items-center justify-between border p-3 rounded-lg">
                   <Label htmlFor="s1" className="text-foreground">Default</Label>
                   <Switch id="s1" />
                 </div>
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="s2" className="text-foreground">Neobrutalism</Label>
+                <div className="flex items-center justify-between border-2 border-foreground p-3 bg-white dark:bg-black">
+                  <Label htmlFor="s2" className="text-foreground font-bold">Neobrutalism</Label>
                   <Switch id="s2" variant="neobrutalism" defaultChecked />
+                </div>
+                 <div className="flex items-center justify-between border p-3 rounded-lg">
+                  <Label htmlFor="s3" className="text-foreground">Small</Label>
+                  <Switch id="s3" size="sm" />
+                </div>
+                 <div className="flex items-center justify-between border p-3 rounded-lg opacity-60">
+                  <Label htmlFor="s4" className="text-foreground">Disabled</Label>
+                  <Switch id="s4" disabled />
                 </div>
               </div>
             </ComponentShowcase>
@@ -908,14 +1101,16 @@ export default function App() {
               details={SELECT_DETAILS}
             >
                 <div className="w-full space-y-4 max-w-[280px]">
-                  <Select value={selectedRole} onValueChange={setSelectedRole}>
+                  <Select>
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Default" />
+                      <SelectValue placeholder="Select Theme" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectItem value="developer">Developer</SelectItem>
-                        <SelectItem value="designer">Designer</SelectItem>
+                        <SelectLabel>Mode</SelectLabel>
+                        <SelectItem value="light">Light</SelectItem>
+                        <SelectItem value="dark">Dark</SelectItem>
+                        <SelectItem value="system">System</SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -928,8 +1123,15 @@ export default function App() {
                       <SelectGroup>
                         <SelectItem value="neo1">Option 1</SelectItem>
                         <SelectItem value="neo2">Option 2</SelectItem>
+                        <SelectItem value="neo3">Option 3</SelectItem>
                       </SelectGroup>
                     </SelectContent>
+                  </Select>
+
+                   <Select disabled>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Disabled" />
+                    </SelectTrigger>
                   </Select>
                 </div>
             </ComponentShowcase>
@@ -944,16 +1146,32 @@ export default function App() {
             >
               <div className="flex flex-col gap-6 w-full max-w-[280px]">
                   <RadioGroup defaultValue="1">
+                    <Label className="mb-2 block text-muted-foreground text-xs uppercase tracking-wider">Vertical Default</Label>
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="1" id="rg1" />
-                        <Label htmlFor="rg1" className="text-foreground">Default</Label>
+                        <Label htmlFor="rg1" className="text-foreground">Option A</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="2" id="rg2" />
+                        <Label htmlFor="rg2" className="text-foreground">Option B</Label>
+                    </div>
+                     <div className="flex items-center space-x-2 opacity-50">
+                        <RadioGroupItem value="3" id="rg3" disabled />
+                        <Label htmlFor="rg3" className="text-foreground">Disabled</Label>
                     </div>
                   </RadioGroup>
+                  
+                  <Separator />
 
-                   <RadioGroup defaultValue="1" variant="neobrutalism">
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="1" id="rg2" />
-                        <Label htmlFor="rg2" className="text-foreground">Neobrutalism</Label>
+                   <RadioGroup defaultValue="1" variant="neobrutalism" className="flex flex-row gap-4">
+                    <Label className="w-full block text-muted-foreground text-xs uppercase tracking-wider mb-2">Horizontal Neo</Label>
+                    <div className="flex items-center space-x-2 border-2 border-foreground p-2 bg-background">
+                        <RadioGroupItem value="1" id="rg-neo1" />
+                        <Label htmlFor="rg-neo1" className="text-foreground">Yes</Label>
+                    </div>
+                     <div className="flex items-center space-x-2 border-2 border-foreground p-2 bg-background">
+                        <RadioGroupItem value="2" id="rg-neo2" />
+                        <Label htmlFor="rg-neo2" className="text-foreground">No</Label>
                     </div>
                   </RadioGroup>
               </div>
@@ -967,11 +1185,28 @@ export default function App() {
               code={SLIDER_CODE}
               details={SLIDER_DETAILS}
             >
-               <div className="w-full max-w-[280px] space-y-8 text-foreground">
+               <div className="w-full max-w-[280px] space-y-6 text-foreground">
                   <div className="space-y-2">
-                      <Label>Default</Label>
+                      <div className="flex justify-between">
+                         <Label>Default</Label>
+                         <span className="text-xs text-muted-foreground">50%</span>
+                      </div>
                       <Slider defaultValue={[50]} max={100} step={1} />
                   </div>
+
+                  <div className="space-y-2">
+                      <div className="flex justify-between">
+                         <Label>Range</Label>
+                         <span className="text-xs text-muted-foreground">20 - 80</span>
+                      </div>
+                      <Slider defaultValue={[20, 80]} max={100} step={1} />
+                  </div>
+
+                   <div className="space-y-2">
+                       <Label>Thick Variant</Label>
+                       <Slider defaultValue={[40]} max={100} step={1} variant="thick" />
+                  </div>
+
                   <div className="space-y-2">
                        <Label>Neobrutalism</Label>
                        <Slider defaultValue={[75]} max={100} step={1} variant="neobrutalism" />
@@ -987,13 +1222,26 @@ export default function App() {
               code={TOGGLE_CODE}
               details={TOGGLE_DETAILS}
             >
-              <div className="flex gap-4">
-                 <Toggle aria-label="Toggle default" className="hover:bg-accent">
-                    <AlignLeft className="h-4 w-4" />
-                 </Toggle>
-                 <Toggle aria-label="Toggle neo" variant="neobrutalism">
-                    <div className="font-bold">Neo</div>
-                 </Toggle>
+              <div className="flex flex-col gap-4 items-center">
+                 <div className="flex gap-4 items-center">
+                    <Toggle aria-label="Toggle default">
+                        <AlignLeft className="h-4 w-4" />
+                    </Toggle>
+                    <Toggle variant="outline" aria-label="Toggle outline">
+                        <Star className="h-4 w-4" />
+                    </Toggle>
+                    <Toggle variant="neobrutalism" aria-label="Toggle neo">
+                        <span className="font-bold text-xs">BOLD</span>
+                    </Toggle>
+                 </div>
+                 <div className="flex gap-4 items-center">
+                     <Toggle size="sm" variant="outline" aria-label="Small">
+                        <span className="text-[10px]">Small</span>
+                     </Toggle>
+                     <Toggle size="lg" variant="outline" aria-label="Large">
+                        <span className="text-sm">Large Toggle</span>
+                     </Toggle>
+                 </div>
               </div>
             </ComponentShowcase>
 
@@ -1006,45 +1254,72 @@ export default function App() {
               details={COMPREHENSIVE_FORM_DETAILS}
               className="lg:col-span-2"
             >
-               <div className="w-full max-w-[320px] space-y-6 text-foreground">
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Standard Input" />
-                    </FormControl>
-                  </FormItem>
+               <div className="w-full max-w-2xl grid grid-cols-1 md:grid-cols-2 gap-8 text-foreground">
+                  {/* Column 1: Inputs */}
+                  <div className="space-y-4">
+                      <FormItem>
+                        <FormLabel>Default Input</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Standard Input" />
+                        </FormControl>
+                      </FormItem>
 
-                  <FormItem>
-                    <FormLabel>Bio (Material)</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Material Design..." variant="material" />
-                    </FormControl>
-                  </FormItem>
-                  
-                  <FormItem>
-                    <FormLabel>Feedback (Filled)</FormLabel>
-                    <FormControl>
-                       <Textarea placeholder="Type here..." variant="filled" />
-                    </FormControl>
-                  </FormItem>
+                      <FormItem>
+                        <FormLabel>Material Style</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Bottom border only" variant="material" />
+                        </FormControl>
+                      </FormItem>
+                      
+                       <FormItem>
+                        <FormLabel>Neobrutalism</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Hard borders" variant="neobrutalism" />
+                        </FormControl>
+                      </FormItem>
 
-                   <div className="flex flex-col gap-4">
-                        <div className="flex items-center space-x-2">
-                            <Checkbox 
-                            id="terms" 
-                            checked={termsAccepted}
-                            onCheckedChange={setTermsAccepted}
-                            variant="circle"
-                            />
-                            <Label htmlFor="terms" className="cursor-pointer" onClick={() => setTermsAccepted(!termsAccepted)}>
-                            Circle Checkbox
-                            </Label>
-                        </div>
-                         <div className="flex items-center space-x-2">
-                            <Checkbox variant="neobrutalism" id="neo-check" />
-                            <Label htmlFor="neo-check">Neo Checkbox</Label>
-                        </div>
-                   </div>
+                      <FormItem>
+                        <FormLabel>Disabled</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Cannot type here" disabled />
+                        </FormControl>
+                      </FormItem>
+                  </div>
+
+                  {/* Column 2: Textarea & Checks */}
+                  <div className="space-y-4">
+                      <FormItem>
+                        <FormLabel>Filled Textarea</FormLabel>
+                        <FormControl>
+                           <Textarea placeholder="Gray background style..." variant="filled" className="resize-none" rows={3} />
+                        </FormControl>
+                      </FormItem>
+
+                       <FormItem>
+                        <FormLabel>File Input</FormLabel>
+                        <FormControl>
+                           <Input type="file" />
+                        </FormControl>
+                      </FormItem>
+
+                       <div className="pt-2 flex flex-col gap-3">
+                            <div className="flex items-center space-x-2">
+                                <Checkbox 
+                                id="terms" 
+                                checked={termsAccepted}
+                                onCheckedChange={setTermsAccepted}
+                                variant="circle"
+                                />
+                                <Label htmlFor="terms" className="cursor-pointer" onClick={() => setTermsAccepted(!termsAccepted)}>
+                                Accept terms (Circle)
+                                </Label>
+                            </div>
+                             <div className="flex items-center space-x-2">
+                                <Checkbox variant="neobrutalism" id="neo-check" />
+                                <Label htmlFor="neo-check">Subscribe (Neo)</Label>
+                            </div>
+                       </div>
+                  </div>
                </div>
             </ComponentShowcase>
 
@@ -1056,19 +1331,39 @@ export default function App() {
               code={POPOVER_CODE}
               details={POPOVER_DETAILS}
             >
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-col gap-4 items-center">
                 <Popover>
                     <PopoverTrigger asChild>
-                        <Button variant="outline">Default</Button>
+                        <Button variant="outline">Open Settings</Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-60"><p className="text-sm">Default Content</p></PopoverContent>
+                    <PopoverContent className="w-80">
+                        <div className="grid gap-4">
+                            <div className="space-y-2">
+                                <h4 className="font-medium leading-none">Dimensions</h4>
+                                <p className="text-sm text-muted-foreground">Set the dimensions for the layer.</p>
+                            </div>
+                            <div className="grid gap-2">
+                                <div className="grid grid-cols-3 items-center gap-4">
+                                    <Label htmlFor="width">Width</Label>
+                                    <Input id="width" defaultValue="100%" className="col-span-2 h-8" />
+                                </div>
+                                <div className="grid grid-cols-3 items-center gap-4">
+                                    <Label htmlFor="height">Height</Label>
+                                    <Input id="height" defaultValue="25px" className="col-span-2 h-8" />
+                                </div>
+                            </div>
+                        </div>
+                    </PopoverContent>
                 </Popover>
 
                 <Popover>
                     <PopoverTrigger asChild>
-                        <Button variant="neobrutalism">Neo</Button>
+                        <Button variant="neobrutalism">Open Info</Button>
                     </PopoverTrigger>
-                    <PopoverContent variant="neobrutalism" className="w-60"><p className="text-sm font-bold">Neobrutalism Content</p></PopoverContent>
+                    <PopoverContent variant="neobrutalism" className="w-60">
+                         <h4 className="font-bold border-b-2 border-foreground pb-2 mb-2">Neo Popover</h4>
+                         <p className="text-sm">Hard borders and shadows. Great for high contrast themes.</p>
+                    </PopoverContent>
                 </Popover>
               </div>
             </ComponentShowcase>
@@ -1080,20 +1375,42 @@ export default function App() {
               description="Callout for user attention."
               code={ALERT_CODE}
               details={ALERT_DETAILS}
+              className="lg:col-span-2"
             >
-              <div className="w-full max-w-[380px] space-y-4">
-                <Alert variant="left-accent">
-                    <Info className="h-4 w-4" />
-                    <AlertTitle>Note</AlertTitle>
-                    <AlertDescription>
-                    Left bordered accent style.
-                    </AlertDescription>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                <Alert variant="default">
+                    <AlertTitle>Default Alert</AlertTitle>
+                    <AlertDescription>Standard notification message.</AlertDescription>
+                </Alert>
+
+                <Alert variant="destructive">
+                   <AlertCircle className="h-4 w-4" />
+                   <AlertTitle>Error</AlertTitle>
+                   <AlertDescription>Something went wrong.</AlertDescription>
                 </Alert>
 
                 <Alert variant="warning">
                   <AlertTriangle className="h-4 w-4" />
                   <AlertTitle>Warning</AlertTitle>
                   <AlertDescription>Your account is expiring soon.</AlertDescription>
+                </Alert>
+
+                <Alert variant="success">
+                  <CheckSquare className="h-4 w-4" />
+                  <AlertTitle>Success</AlertTitle>
+                  <AlertDescription>Operation completed successfully.</AlertDescription>
+                </Alert>
+
+                 <Alert variant="info">
+                  <Info className="h-4 w-4" />
+                  <AlertTitle>Info</AlertTitle>
+                  <AlertDescription>New features available.</AlertDescription>
+                </Alert>
+
+                <Alert variant="left-accent">
+                    <Info className="h-4 w-4" />
+                    <AlertTitle>Left Accent</AlertTitle>
+                    <AlertDescription>Highlighted side border.</AlertDescription>
                 </Alert>
               </div>
             </ComponentShowcase>
@@ -1112,27 +1429,54 @@ export default function App() {
                 </div>
               }
             >
-               <div className="flex flex-col items-center gap-6">
-                 <div className="flex gap-4 items-center">
-                    <AvatarGroup>
+               <div className="flex flex-col items-center gap-8 w-full">
+                 <div className="flex flex-wrap gap-8 items-end justify-center">
+                    <div className="flex flex-col items-center gap-2">
+                        <span className="text-xs text-muted-foreground">Default</span>
                         <Avatar>
-                          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                          <AvatarFallback>CN</AvatarFallback>
+                            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                            <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
+                    </div>
+                    <div className="flex flex-col items-center gap-2">
+                        <span className="text-xs text-muted-foreground">Square</span>
                         <Avatar shape="square">
-                          <AvatarImage src="https://github.com/vercel.png" alt="@vercel" />
-                          <AvatarFallback>VC</AvatarFallback>
+                            <AvatarImage src="https://github.com/vercel.png" alt="@vercel" />
+                            <AvatarFallback>VC</AvatarFallback>
                         </Avatar>
-                        <Avatar>
-                          <AvatarFallback>+3</AvatarFallback>
-                        </Avatar>
-                    </AvatarGroup>
+                    </div>
+                    <div className="flex flex-col items-center gap-2">
+                        <span className="text-xs text-muted-foreground">Group</span>
+                        <AvatarGroup>
+                            <Avatar>
+                            <AvatarImage src="https://i.pravatar.cc/150?u=1" />
+                            <AvatarFallback>A</AvatarFallback>
+                            </Avatar>
+                            <Avatar>
+                            <AvatarImage src="https://i.pravatar.cc/150?u=3" />
+                            <AvatarFallback>B</AvatarFallback>
+                            </Avatar>
+                            <Avatar>
+                            <AvatarFallback>+3</AvatarFallback>
+                            </Avatar>
+                        </AvatarGroup>
+                    </div>
                  </div>
-                 <div className="flex gap-2 flex-wrap justify-center">
-                    <Badge variant="neutral">Neutral</Badge>
-                    <Badge variant="soft-success">Success</Badge>
-                    <Badge variant="neobrutalism">Neo</Badge>
-                    <Badge variant="outline" className="border-foreground/40">Outline</Badge>
+                 <Separator className="w-3/4" />
+                 <div className="flex flex-col gap-3 items-center">
+                    <div className="flex gap-2 flex-wrap justify-center">
+                        <Badge variant="default">Default</Badge>
+                        <Badge variant="secondary">Secondary</Badge>
+                        <Badge variant="outline" className="border-foreground/40">Outline</Badge>
+                        <Badge variant="neutral">Neutral</Badge>
+                        <Badge variant="neobrutalism">Neo</Badge>
+                    </div>
+                     <div className="flex gap-2 flex-wrap justify-center">
+                        <Badge variant="soft-success">Success</Badge>
+                        <Badge variant="soft-warning">Warning</Badge>
+                        <Badge variant="soft-destructive">Error</Badge>
+                        <Badge variant="soft-info">Info</Badge>
+                    </div>
                  </div>
                </div>
             </ComponentShowcase>
@@ -1145,13 +1489,27 @@ export default function App() {
               code={SKELETON_CODE}
               details={SKELETON_DETAILS}
             >
-               <div className="flex items-center space-x-4 w-full max-w-[280px]">
-                <Skeleton variant="circle" className="h-12 w-12 bg-black/10 dark:bg-white/20" />
-                <div className="space-y-2 flex-1">
-                  <Skeleton className="h-4 w-full bg-black/10 dark:bg-white/20" />
-                  <Skeleton className="h-4 w-[80%] bg-black/10 dark:bg-white/20" />
-                </div>
-              </div>
+               <div className="flex flex-col gap-6 w-full max-w-[320px]">
+                  {/* List Item Skeleton */}
+                  <div className="flex items-center space-x-4">
+                    <Skeleton variant="circle" className="h-12 w-12 bg-black/10 dark:bg-white/20" />
+                    <div className="space-y-2 flex-1">
+                    <Skeleton className="h-4 w-full bg-black/10 dark:bg-white/20" />
+                    <Skeleton className="h-4 w-[80%] bg-black/10 dark:bg-white/20" />
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Card Skeleton */}
+                  <div className="space-y-3">
+                     <Skeleton className="h-[125px] w-full rounded-xl bg-black/10 dark:bg-white/20" />
+                     <div className="space-y-2">
+                        <Skeleton className="h-4 w-full bg-black/10 dark:bg-white/20" />
+                        <Skeleton className="h-4 w-[90%] bg-black/10 dark:bg-white/20" />
+                     </div>
+                  </div>
+               </div>
             </ComponentShowcase>
             
             {/* Separator Card */}
@@ -1162,20 +1520,26 @@ export default function App() {
               code={SEPARATOR_CODE}
               details={SEPARATOR_DETAILS}
             >
-               <div className="w-full max-w-[280px] text-foreground">
+               <div className="w-full max-w-[280px] text-foreground border rounded-md p-4 bg-card">
                 <div className="space-y-1">
-                  <h4 className="text-sm font-medium leading-none">Radix Primitives</h4>
+                  <h4 className="text-sm font-medium leading-none">Settings</h4>
                   <p className="text-sm text-muted-foreground">
-                    An open-source UI component library.
+                    User preferences.
                   </p>
                 </div>
-                <Separator className="my-4" variant="dashed" />
+                <Separator className="my-4" />
                 <div className="flex h-5 items-center space-x-4 text-sm">
-                  <div>Blog</div>
+                  <div>Profile</div>
                   <Separator orientation="vertical" />
-                  <div>Docs</div>
+                  <div>Billing</div>
                   <Separator orientation="vertical" variant="dotted" />
-                  <div>Source</div>
+                  <div>Team</div>
+                </div>
+                <Separator className="my-4" variant="dashed" />
+                <div className="flex flex-col gap-2">
+                    <div className="text-sm">Notifications</div>
+                    <Separator variant="dotted" />
+                    <div className="text-sm">Privacy</div>
                 </div>
               </div>
             </ComponentShowcase>
@@ -1230,6 +1594,17 @@ export default function App() {
                       <Button variant="neobrutalism" size="sm">Action</Button>
                     </CardFooter>
                   </Card>
+
+                   {/* Media Card */}
+                   <Card className="overflow-hidden">
+                       <CardImage src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&q=80" alt="Coding" />
+                       <CardHeader>
+                           <CardTitle>Media Card</CardTitle>
+                       </CardHeader>
+                       <CardContent>
+                           <p className="text-sm text-muted-foreground">Card with top image.</p>
+                       </CardContent>
+                   </Card>
                </div>
             </ComponentShowcase>
 
@@ -1241,22 +1616,29 @@ export default function App() {
               code={TABS_CODE}
               details={TABS_DETAILS}
             >
-               <div className="flex flex-col gap-6">
-                  <Tabs defaultValue="music" className="w-[300px]" variant="pills">
-                    <TabsList className="bg-muted/50">
-                      <TabsTrigger value="music">Pills</TabsTrigger>
-                      <TabsTrigger value="podcasts">Podcasts</TabsTrigger>
+               <div className="flex flex-col gap-8 w-full max-w-[320px]">
+                  <Tabs defaultValue="music" className="w-full" variant="pills">
+                    <TabsList className="bg-muted/50 w-full justify-between">
+                      <TabsTrigger value="music" className="flex-1">Pills</TabsTrigger>
+                      <TabsTrigger value="podcasts" className="flex-1">Podcasts</TabsTrigger>
                     </TabsList>
                   </Tabs>
 
-                  <Tabs defaultValue="music" className="w-[300px]" variant="enclosed">
-                    <TabsList>
+                  <Tabs defaultValue="music" className="w-full" variant="enclosed">
+                    <TabsList className="w-full">
                       <TabsTrigger value="music">Enclosed</TabsTrigger>
                       <TabsTrigger value="podcasts">Podcasts</TabsTrigger>
                     </TabsList>
                     <TabsContent value="music">
                         <p className="text-sm text-muted-foreground">Content inside a bordered box.</p>
                     </TabsContent>
+                  </Tabs>
+
+                  <Tabs defaultValue="music" className="w-full" variant="underline">
+                    <TabsList className="w-full">
+                      <TabsTrigger value="music">Underline</TabsTrigger>
+                      <TabsTrigger value="podcasts">Podcasts</TabsTrigger>
+                    </TabsList>
                   </Tabs>
                </div>
             </ComponentShowcase>
@@ -1269,20 +1651,40 @@ export default function App() {
               code={ACCORDION_CODE}
               details={ACCORDION_DETAILS}
             >
-              <div className="w-full max-w-[280px] space-y-4">
-                 <Accordion type="single" collapsible className="w-full">
-                    <AccordionItem value="item-1" className="bg-card border-b">
-                      <AccordionTrigger>Default</AccordionTrigger>
-                      <AccordionContent>Classic accordion.</AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
+              <div className="w-full max-w-[280px] space-y-6">
+                 <div>
+                    <Label className="mb-2 block text-xs uppercase text-muted-foreground">Default</Label>
+                    <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="item-1">
+                        <AccordionTrigger>Is it accessible?</AccordionTrigger>
+                        <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                 </div>
 
-                  <Accordion type="single" className="w-full" variant="neobrutalism">
-                    <AccordionItem value="item-1">
-                      <AccordionTrigger>Neobrutalism</AccordionTrigger>
-                      <AccordionContent>Hard borders & shadows.</AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
+                  <div>
+                     <Label className="mb-2 block text-xs uppercase text-muted-foreground">Neobrutalism</Label>
+                     <Accordion type="single" className="w-full" variant="neobrutalism">
+                        <AccordionItem value="item-1">
+                        <AccordionTrigger>Hard Style</AccordionTrigger>
+                        <AccordionContent>Thick borders & hard shadows.</AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                  </div>
+
+                   <div>
+                     <Label className="mb-2 block text-xs uppercase text-muted-foreground">Multiple</Label>
+                     <Accordion type="multiple" className="w-full" variant="boxed">
+                        <AccordionItem value="item-1">
+                             <AccordionTrigger>Item 1</AccordionTrigger>
+                             <AccordionContent>Content 1</AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="item-2">
+                             <AccordionTrigger>Item 2</AccordionTrigger>
+                             <AccordionContent>Content 2</AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                  </div>
               </div>
             </ComponentShowcase>
 
