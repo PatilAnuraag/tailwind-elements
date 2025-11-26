@@ -48,11 +48,12 @@ import { cn } from "./lib/utils";
 const BUTTON_CODE = `
 <div className="flex flex-wrap items-center gap-4">
   <Button>Default</Button>
+  <Button variant="shine">Shine</Button>
+  <Button variant="link-hover">Hover Link</Button>
   <Button variant="neobrutalism">Neo</Button>
   <Button variant="gradient" shape="pill">Gradient Pill</Button>
   <Button variant="soft">Soft</Button>
   <Button variant="outline" shape="square">Square</Button>
-  <Button variant="ghost">Ghost</Button>
 </div>
 `.trim();
 
@@ -64,6 +65,8 @@ const BUTTON_DETAILS = (
     <div>
       <h4 className="font-semibold text-foreground mb-1">Variants</h4>
       <ul className="list-disc pl-4 space-y-1">
+        <li><strong>Shine:</strong> Animated shimmer effect on hover, great for CTA.</li>
+        <li><strong>Link Hover:</strong> Text button with animated underline.</li>
         <li><strong>Soft:</strong> Subtle background with primary text (bg-primary/10).</li>
         <li><strong>Neobrutalism:</strong> High contrast, hard borders and shadows.</li>
         <li><strong>Gradient:</strong> Stylish gradient background.</li>
@@ -84,7 +87,7 @@ const DIALOG_CODE = `
   <DialogTrigger asChild>
     <Button variant="default">Open Dialog</Button>
   </DialogTrigger>
-  {/* Variant can be default, neobrutalism, or glass */}
+  {/* Variant can be default or neobrutalism */}
   <DialogContent variant="neobrutalism" className="sm:max-w-[425px]">
     <DialogHeader>
       <DialogTitle>Edit profile</DialogTitle>
@@ -119,7 +122,6 @@ const DIALOG_DETAILS = (
       <h4 className="font-semibold text-foreground mb-1">Variants</h4>
       <ul className="list-disc pl-4 space-y-1">
         <li><strong>Neobrutalism:</strong> Hard borders and hard shadow.</li>
-        <li><strong>Glass:</strong> Backdrop blur and translucent background.</li>
       </ul>
     </div>
   </div>
@@ -134,9 +136,6 @@ const SWITCH_CODE = `
 
 // Neobrutalism Variant
 <Switch variant="neobrutalism" />
-
-// Glass Variant
-<Switch variant="glass" />
 `.trim();
 
 const SWITCH_DETAILS = (
@@ -148,7 +147,6 @@ const SWITCH_DETAILS = (
       <h4 className="font-semibold text-foreground mb-1">Variants</h4>
       <ul className="list-disc pl-4 space-y-1">
         <li><strong>Neobrutalism:</strong> Rectangular track, square thumb, thick borders.</li>
-        <li><strong>Glass:</strong> Translucent track.</li>
       </ul>
     </div>
     <div>
@@ -185,7 +183,6 @@ const SELECT_DETAILS = (
       <h4 className="font-semibold text-foreground mb-1">Variants</h4>
       <ul className="list-disc pl-4 space-y-1">
         <li><strong>Neobrutalism:</strong> Hard borders and shadows for trigger and content.</li>
-        <li><strong>Glass:</strong> Translucent background with blur.</li>
       </ul>
     </div>
     <div>
@@ -208,15 +205,11 @@ const CARD_CODE = `
     <CardContent>Content</CardContent>
   </Card>
 
-  <Card variant="neobrutalism">
+  <Card variant="brutal">
     <CardHeader>
-      <CardTitle>Neobrutalism</CardTitle>
-      <CardDescription>Hard shadows</CardDescription>
+      <CardTitle className="text-white">Brutal</CardTitle>
     </CardHeader>
-  </Card>
-
-  <Card variant="glass" className="text-white">
-     {/* ... */}
+    <CardContent>Solid bold style.</CardContent>
   </Card>
 </div>
 `.trim();
@@ -230,8 +223,8 @@ const CARD_DETAILS = (
       <h4 className="font-semibold text-foreground mb-1">Variants</h4>
       <ul className="list-disc pl-4 space-y-1">
         <li><strong>Default:</strong> Standard border and shadow.</li>
+        <li><strong>Brutal:</strong> Solid primary color background with high contrast text.</li>
         <li><strong>Neobrutalism:</strong> Hard black borders and offset shadows.</li>
-        <li><strong>Glass:</strong> Backdrop blur and translucent background.</li>
         <li><strong>Interactive:</strong> Hover scale and shadow effect.</li>
       </ul>
     </div>
@@ -239,16 +232,13 @@ const CARD_DETAILS = (
 );
 
 const TABS_CODE = `
-<Tabs defaultValue="account" className="w-[400px]" variant="underline">
+<Tabs defaultValue="account" className="w-[400px]" variant="pills">
   <TabsList>
     <TabsTrigger value="account">Account</TabsTrigger>
     <TabsTrigger value="password">Password</TabsTrigger>
   </TabsList>
   <TabsContent value="account">
     {/* Account view */}
-  </TabsContent>
-  <TabsContent value="password">
-    {/* Password view */}
   </TabsContent>
 </Tabs>
 `.trim();
@@ -261,9 +251,10 @@ const TABS_DETAILS = (
     <div>
       <h4 className="font-semibold text-foreground mb-1">Variants</h4>
       <ul className="list-disc pl-4 space-y-1">
+        <li><strong>Pills:</strong> Segmented control style with rounded active state.</li>
+        <li><strong>Enclosed:</strong> Tabs connected to a bordered content box.</li>
         <li><strong>Underline:</strong> Minimal border-bottom style.</li>
         <li><strong>Neobrutalism:</strong> Hard borders and active tab shadow.</li>
-        <li><strong>Glass:</strong> Translucent pills.</li>
       </ul>
     </div>
     <div>
@@ -298,7 +289,6 @@ const ACCORDION_DETAILS = (
         <li><strong>Default:</strong> Clean look with bottom borders.</li>
         <li><strong>Boxed:</strong> Separate boxes for each item with rounded corners.</li>
         <li><strong>Neobrutalism:</strong> Thick borders and hard shadows.</li>
-        <li><strong>Glass:</strong> Translucent background.</li>
       </ul>
     </div>
     <div>
@@ -314,9 +304,9 @@ const ACCORDION_DETAILS = (
 const BADGE_CODE = `
 <div className="flex gap-2">
   <Badge>Default</Badge>
+  <Badge variant="neutral">Neutral</Badge>
   <Badge variant="soft-success">Soft Success</Badge>
   <Badge variant="neobrutalism">Neo</Badge>
-  <Badge variant="glass">Glass</Badge>
   <Badge variant="outline">Outline</Badge>
 </div>
 `.trim();
@@ -329,9 +319,9 @@ const BADGE_DETAILS = (
     <div>
       <h4 className="font-semibold text-foreground mb-1">Variants</h4>
       <ul className="list-disc pl-4 space-y-1">
+        <li><strong>Neutral:</strong> Gray/Slate styling for general tags.</li>
         <li><strong>Soft:</strong> Pastel background with darker text (e.g., <code>soft-success</code>), popular in dashboards.</li>
         <li><strong>Neobrutalism:</strong> Square corners, thick border, shadow.</li>
-        <li><strong>Glass:</strong> Translucent background.</li>
       </ul>
     </div>
   </div>
@@ -378,19 +368,19 @@ const AVATAR_DETAILS = (
 
 const ALERT_CODE = `
 <div className="space-y-4">
+  <Alert variant="left-accent">
+    <Info className="h-4 w-4" />
+    <AlertTitle>Note</AlertTitle>
+    <AlertDescription>
+      Left bordered accent style.
+    </AlertDescription>
+  </Alert>
+
   <Alert variant="warning">
     <AlertTriangle className="h-4 w-4" />
     <AlertTitle>Warning</AlertTitle>
     <AlertDescription>
       Your account is expiring soon.
-    </AlertDescription>
-  </Alert>
-  
-  <Alert variant="neobrutalism">
-    <Info className="h-4 w-4" />
-    <AlertTitle>Neo Alert</AlertTitle>
-    <AlertDescription>
-      High contrast alert style.
     </AlertDescription>
   </Alert>
 </div>
@@ -404,8 +394,9 @@ const ALERT_DETAILS = (
     <div>
       <h4 className="font-semibold text-foreground mb-1">Variants</h4>
       <ul className="list-disc pl-4 space-y-1">
+        <li><strong>Left Accent:</strong> Adds a thick colored border to the left side.</li>
         <li><code>default</code>, <code>destructive</code>, <code>success</code>, <code>warning</code>, <code>info</code>.</li>
-        <li><code>neobrutalism</code>, <code>glass</code>.</li>
+        <li><code>neobrutalism</code>.</li>
       </ul>
     </div>
     <div>
@@ -439,7 +430,6 @@ const RADIO_DETAILS = (
       <h4 className="font-semibold text-foreground mb-1">Variants</h4>
       <ul className="list-disc pl-4 space-y-1">
         <li><strong>Neobrutalism:</strong> Square indicators with hard shadow.</li>
-        <li><strong>Glass:</strong> Translucent indicators.</li>
       </ul>
     </div>
     <div>
@@ -470,7 +460,7 @@ const SLIDER_DETAILS = (
       <h4 className="font-semibold text-foreground mb-1">Interactions</h4>
       <ul className="list-disc pl-4 space-y-1">
         <li><strong>Range:</strong> Supports multiple handles for range selection.</li>
-        <li><strong>Variants:</strong> Standard, Thick, Neobrutalism (Square handles), Glass.</li>
+        <li><strong>Variants:</strong> Standard, Thick, Neobrutalism (Square handles).</li>
       </ul>
     </div>
   </div>
@@ -491,7 +481,6 @@ const TOGGLE_DETAILS = (
       <h4 className="font-semibold text-foreground mb-1">Variants</h4>
       <ul className="list-disc pl-4 space-y-1">
         <li><strong>Neobrutalism:</strong> Square, hard shadow when active.</li>
-        <li><strong>Glass:</strong> Translucent.</li>
       </ul>
     </div>
   </div>
@@ -519,7 +508,6 @@ const POPOVER_DETAILS = (
       <h4 className="font-semibold text-foreground mb-1">Variants</h4>
       <ul className="list-disc pl-4 space-y-1">
         <li><strong>Neobrutalism:</strong> Hard borders, no radius, shadow.</li>
-        <li><strong>Glass:</strong> Backdrop blur.</li>
       </ul>
     </div>
     <div>
@@ -537,7 +525,7 @@ const COMPREHENSIVE_FORM_CODE = `
   <FormItem>
     <FormLabel>Name</FormLabel>
     <FormControl>
-      <Input placeholder="John Doe" variant="neobrutalism" />
+      <Input placeholder="John Doe" variant="material" />
     </FormControl>
   </FormItem>
 
@@ -563,8 +551,8 @@ const COMPREHENSIVE_FORM_DETAILS = (
     <div>
       <h4 className="font-semibold text-foreground mb-1">Variants</h4>
       <ul className="list-disc pl-4 space-y-1">
-        <li><strong>Inputs:</strong> Default, Filled (gray bg), Flushed (underline), Neobrutalism.</li>
-        <li><strong>Checkbox:</strong> Default, Circle, Neobrutalism, Glass.</li>
+        <li><strong>Inputs:</strong> Default, Filled (gray bg), Flushed (underline), Material (bottom border), Neobrutalism.</li>
+        <li><strong>Checkbox:</strong> Default, Circle, Neobrutalism.</li>
       </ul>
     </div>
     <div>
@@ -577,11 +565,13 @@ const COMPREHENSIVE_FORM_DETAILS = (
 );
 
 const SEPARATOR_CODE = `
-<Separator className="my-4" />
+<Separator className="my-4" variant="dashed" />
 <div className="flex h-5 items-center space-x-4 text-sm">
   <div>Blog</div>
   <Separator orientation="vertical" />
   <div>Docs</div>
+  <Separator orientation="vertical" variant="dotted" />
+  <div>Source</div>
 </div>
 `.trim();
 
@@ -590,6 +580,12 @@ const SEPARATOR_DETAILS = (
     <p>
       Visually or semantically separates content.
     </p>
+    <div>
+      <h4 className="font-semibold text-foreground mb-1">Variants</h4>
+      <ul className="list-disc pl-4 space-y-1">
+        <li><strong>Dashed / Dotted:</strong> Styles for different visual separation needs.</li>
+      </ul>
+    </div>
     <div>
       <h4 className="font-semibold text-foreground mb-1">Accessibility</h4>
       <ul className="list-disc pl-4 space-y-1">
@@ -640,7 +636,7 @@ function ComponentShowcase({
   icon: any, 
   description: string, 
   code: string, 
-  children: React.ReactNode,
+  children?: React.ReactNode,
   details?: React.ReactNode,
   className?: string
 }) {
@@ -775,13 +771,13 @@ export default function App() {
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl">
               A high-quality component showcase powered by pure React and Tailwind CSS. 
-              Featuring modern design trends like Glassmorphism and Neobrutalism across all components.
+              Featuring modern design trends like Neobrutalism across all components.
             </p>
             <div className="flex gap-4 pt-4">
               <Button size="lg" className="gap-2" variant="gradient" shape="pill">
                 Get Started <ArrowRight className="h-4 w-4" />
               </Button>
-              <Button size="lg" variant="neobrutalism" onClick={() => window.open('https://github.com', '_blank')}>
+              <Button size="lg" variant="neobrutalism" onClick={() => window.open('https://github.com/PatilAnuraag/tailwind-elements', '_blank')}>
                 View Code
               </Button>
             </div>
@@ -803,7 +799,7 @@ export default function App() {
                 <Palette className="h-6 w-6" />
               </div>
               <h3 className="text-lg font-semibold mb-2">Modern Variants</h3>
-              <p className="text-muted-foreground">Includes Neobrutalism, Glassmorphism, and Soft UI variants out of the box.</p>
+              <p className="text-muted-foreground">Includes Neobrutalism and Soft UI variants out of the box.</p>
             </div>
             <div className="flex flex-col items-center text-center p-6 border rounded-lg bg-card/50">
               <div className="p-3 rounded-full bg-primary/10 text-primary mb-4">
@@ -831,6 +827,8 @@ export default function App() {
             >
               <div className="flex flex-wrap items-center justify-center gap-4">
                 <Button>Default</Button>
+                <Button variant="shine">Shine</Button>
+                <Button variant="link-hover">Hover Link</Button>
                 <Button variant="neobrutalism">Neo</Button>
                 <Button variant="gradient" shape="pill">Gradient</Button>
                 <Button variant="soft">Soft</Button>
@@ -839,7 +837,6 @@ export default function App() {
                 <Button size="icon" variant="outline" aria-label="Icon Only Button">
                    <Plus className="h-4 w-4" />
                 </Button>
-                <Button variant="glass">Glass</Button>
               </div>
             </ComponentShowcase>
 
@@ -879,20 +876,6 @@ export default function App() {
                     <DialogFooter><Button variant="neobrutalism">Save</Button></DialogFooter>
                     </DialogContent>
                 </Dialog>
-
-                <Dialog>
-                    <DialogTrigger asChild>
-                    <Button variant="outline" className="text-foreground border-foreground/20 dark:text-white dark:border-white/20 dark:hover:bg-white/10 hover:bg-black/5">Glass</Button>
-                    </DialogTrigger>
-                    <DialogContent variant="glass" className="sm:max-w-[425px]">
-                    <DialogHeader>
-                        <DialogTitle>Glassmorphism</DialogTitle>
-                        <DialogDescription>Backdrop blur effect.</DialogDescription>
-                    </DialogHeader>
-                    <div className="py-4"><p className="text-sm">Content goes here...</p></div>
-                    <DialogFooter><Button variant="glass">Save</Button></DialogFooter>
-                    </DialogContent>
-                </Dialog>
               </div>
             </ComponentShowcase>
 
@@ -912,10 +895,6 @@ export default function App() {
                 <div className="flex items-center justify-between">
                   <Label htmlFor="s2" className="text-foreground">Neobrutalism</Label>
                   <Switch id="s2" variant="neobrutalism" defaultChecked />
-                </div>
-                 <div className="flex items-center justify-between">
-                  <Label htmlFor="s3" className="text-foreground">Glass</Label>
-                  <Switch id="s3" variant="glass" defaultChecked />
                 </div>
               </div>
             </ComponentShowcase>
@@ -952,18 +931,6 @@ export default function App() {
                       </SelectGroup>
                     </SelectContent>
                   </Select>
-
-                   <Select>
-                    <SelectTrigger className="w-full" variant="glass">
-                      <SelectValue placeholder="Glass" />
-                    </SelectTrigger>
-                    <SelectContent variant="glass">
-                      <SelectGroup>
-                        <SelectItem value="glass1">Option 1</SelectItem>
-                        <SelectItem value="glass2">Option 2</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
                 </div>
             </ComponentShowcase>
 
@@ -989,13 +956,6 @@ export default function App() {
                         <Label htmlFor="rg2" className="text-foreground">Neobrutalism</Label>
                     </div>
                   </RadioGroup>
-
-                   <RadioGroup defaultValue="1" variant="glass">
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="1" id="rg3" />
-                        <Label htmlFor="rg3" className="text-foreground">Glass</Label>
-                    </div>
-                  </RadioGroup>
               </div>
             </ComponentShowcase>
 
@@ -1016,10 +976,6 @@ export default function App() {
                        <Label>Neobrutalism</Label>
                        <Slider defaultValue={[75]} max={100} step={1} variant="neobrutalism" />
                   </div>
-                   <div className="space-y-2">
-                       <Label>Glass</Label>
-                       <Slider defaultValue={[30]} max={100} step={1} variant="glass" />
-                  </div>
                </div>
             </ComponentShowcase>
 
@@ -1037,9 +993,6 @@ export default function App() {
                  </Toggle>
                  <Toggle aria-label="Toggle neo" variant="neobrutalism">
                     <div className="font-bold">Neo</div>
-                 </Toggle>
-                 <Toggle aria-label="Toggle glass" variant="glass" pressed>
-                    <div className="italic">Glass</div>
                  </Toggle>
               </div>
             </ComponentShowcase>
@@ -1060,18 +1013,18 @@ export default function App() {
                       <Input placeholder="Standard Input" />
                     </FormControl>
                   </FormItem>
-                  
+
                   <FormItem>
-                    <FormLabel>Bio (Filled)</FormLabel>
+                    <FormLabel>Bio (Material)</FormLabel>
                     <FormControl>
-                       <Textarea placeholder="Type here..." variant="filled" />
+                      <Input placeholder="Material Design..." variant="material" />
                     </FormControl>
                   </FormItem>
-
-                   <FormItem>
-                    <FormLabel>Website (Neobrutalism)</FormLabel>
+                  
+                  <FormItem>
+                    <FormLabel>Feedback (Filled)</FormLabel>
                     <FormControl>
-                       <Input placeholder="https://..." variant="neobrutalism" />
+                       <Textarea placeholder="Type here..." variant="filled" />
                     </FormControl>
                   </FormItem>
 
@@ -1090,10 +1043,6 @@ export default function App() {
                          <div className="flex items-center space-x-2">
                             <Checkbox variant="neobrutalism" id="neo-check" />
                             <Label htmlFor="neo-check">Neo Checkbox</Label>
-                        </div>
-                         <div className="flex items-center space-x-2">
-                            <Checkbox variant="glass" id="glass-check" defaultChecked />
-                            <Label htmlFor="glass-check">Glass Checkbox</Label>
                         </div>
                    </div>
                </div>
@@ -1121,13 +1070,6 @@ export default function App() {
                     </PopoverTrigger>
                     <PopoverContent variant="neobrutalism" className="w-60"><p className="text-sm font-bold">Neobrutalism Content</p></PopoverContent>
                 </Popover>
-
-                 <Popover>
-                    <PopoverTrigger asChild>
-                        <Button variant="ghost" className="hover:bg-black/5 dark:hover:bg-white/10">Glass</Button>
-                    </PopoverTrigger>
-                    <PopoverContent variant="glass" className="w-60"><p className="text-sm">Glass Content</p></PopoverContent>
-                </Popover>
               </div>
             </ComponentShowcase>
 
@@ -1140,20 +1082,18 @@ export default function App() {
               details={ALERT_DETAILS}
             >
               <div className="w-full max-w-[380px] space-y-4">
+                <Alert variant="left-accent">
+                    <Info className="h-4 w-4" />
+                    <AlertTitle>Note</AlertTitle>
+                    <AlertDescription>
+                    Left bordered accent style.
+                    </AlertDescription>
+                </Alert>
+
                 <Alert variant="warning">
                   <AlertTriangle className="h-4 w-4" />
                   <AlertTitle>Warning</AlertTitle>
                   <AlertDescription>Your account is expiring soon.</AlertDescription>
-                </Alert>
-                 <Alert variant="neobrutalism">
-                  <Info className="h-4 w-4" />
-                  <AlertTitle>Neo Alert</AlertTitle>
-                  <AlertDescription>High contrast alert style.</AlertDescription>
-                </Alert>
-                <Alert variant="glass">
-                  <CheckSquare className="h-4 w-4" />
-                  <AlertTitle>Glass Alert</AlertTitle>
-                  <AlertDescription>Translucent alert style.</AlertDescription>
                 </Alert>
               </div>
             </ComponentShowcase>
@@ -1189,9 +1129,9 @@ export default function App() {
                     </AvatarGroup>
                  </div>
                  <div className="flex gap-2 flex-wrap justify-center">
+                    <Badge variant="neutral">Neutral</Badge>
                     <Badge variant="soft-success">Success</Badge>
                     <Badge variant="neobrutalism">Neo</Badge>
-                    <Badge variant="glass">Glass</Badge>
                     <Badge variant="outline" className="border-foreground/40">Outline</Badge>
                  </div>
                </div>
@@ -1229,12 +1169,12 @@ export default function App() {
                     An open-source UI component library.
                   </p>
                 </div>
-                <Separator className="my-4" variant="glass" />
+                <Separator className="my-4" variant="dashed" />
                 <div className="flex h-5 items-center space-x-4 text-sm">
                   <div>Blog</div>
-                  <Separator orientation="vertical" variant="glass" />
+                  <Separator orientation="vertical" />
                   <div>Docs</div>
-                  <Separator orientation="vertical" variant="glass" />
+                  <Separator orientation="vertical" variant="dotted" />
                   <div>Source</div>
                 </div>
               </div>
@@ -1263,6 +1203,19 @@ export default function App() {
                       <Button variant="outline" size="sm">Action</Button>
                     </CardFooter>
                   </Card>
+                   
+                   {/* Brutal Card */}
+                   <Card variant="brutal">
+                    <CardHeader>
+                      <CardTitle className="text-white">Brutal</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-primary-foreground/90">Bold solid color.</p>
+                    </CardContent>
+                    <CardFooter>
+                      <Button variant="secondary" size="sm">Action</Button>
+                    </CardFooter>
+                  </Card>
 
                    {/* Neobrutalism Card */}
                    <Card variant="neobrutalism">
@@ -1277,20 +1230,6 @@ export default function App() {
                       <Button variant="neobrutalism" size="sm">Action</Button>
                     </CardFooter>
                   </Card>
-
-                  {/* Glass Card */}
-                   <Card variant="glass">
-                    <CardHeader>
-                      <CardTitle>Glassmorphism</CardTitle>
-                      <CardDescription>Blur effect</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                       <p className="text-sm">Translucent background with backdrop filter.</p>
-                    </CardContent>
-                    <CardFooter>
-                       <Button variant="glass" size="sm">Action</Button>
-                    </CardFooter>
-                  </Card>
                </div>
             </ComponentShowcase>
 
@@ -1303,25 +1242,21 @@ export default function App() {
               details={TABS_DETAILS}
             >
                <div className="flex flex-col gap-6">
-                  <Tabs defaultValue="music" className="w-[300px]" variant="underline">
-                    <TabsList className="bg-white/80 dark:bg-black/80">
-                      <TabsTrigger value="music">Underline</TabsTrigger>
+                  <Tabs defaultValue="music" className="w-[300px]" variant="pills">
+                    <TabsList className="bg-muted/50">
+                      <TabsTrigger value="music">Pills</TabsTrigger>
                       <TabsTrigger value="podcasts">Podcasts</TabsTrigger>
                     </TabsList>
                   </Tabs>
 
-                  <Tabs defaultValue="music" className="w-[300px]" variant="neobrutalism">
+                  <Tabs defaultValue="music" className="w-[300px]" variant="enclosed">
                     <TabsList>
-                      <TabsTrigger value="music">Neobrutalism</TabsTrigger>
+                      <TabsTrigger value="music">Enclosed</TabsTrigger>
                       <TabsTrigger value="podcasts">Podcasts</TabsTrigger>
                     </TabsList>
-                  </Tabs>
-
-                  <Tabs defaultValue="music" className="w-[300px]" variant="glass">
-                    <TabsList>
-                      <TabsTrigger value="music">Glass</TabsTrigger>
-                      <TabsTrigger value="podcasts">Podcasts</TabsTrigger>
-                    </TabsList>
+                    <TabsContent value="music">
+                        <p className="text-sm text-muted-foreground">Content inside a bordered box.</p>
+                    </TabsContent>
                   </Tabs>
                </div>
             </ComponentShowcase>
@@ -1348,13 +1283,6 @@ export default function App() {
                       <AccordionContent>Hard borders & shadows.</AccordionContent>
                     </AccordionItem>
                   </Accordion>
-
-                   <Accordion type="single" className="w-full" variant="glass">
-                    <AccordionItem value="item-1">
-                      <AccordionTrigger className="hover:no-underline">Glass</AccordionTrigger>
-                      <AccordionContent>Translucent style.</AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
               </div>
             </ComponentShowcase>
 
@@ -1367,7 +1295,7 @@ export default function App() {
            <p>Built with React & Tailwind CSS</p>
            <div className="flex gap-4">
              <a href="#" className="hover:underline">Docs</a>
-             <a href="#" className="hover:underline">GitHub</a>
+             <a href="https://github.com/PatilAnuraag/tailwind-elements" target="_blank" className="hover:underline">GitHub</a>
              <a href="#" className="hover:underline">Twitter</a>
            </div>
         </div>

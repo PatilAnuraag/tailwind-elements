@@ -11,7 +11,6 @@ const toggleVariants = cva(
         outline:
           "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground",
         neobrutalism: "rounded-none border-2 border-transparent data-[state=on]:border-foreground data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-muted/20",
-        glass: "bg-transparent hover:bg-black/5 dark:hover:bg-primary/10 data-[state=on]:bg-black/10 dark:data-[state=on]:bg-primary/20 data-[state=on]:text-foreground dark:data-[state=on]:text-primary backdrop-blur-sm",
       },
       size: {
         default: "h-10 px-3",

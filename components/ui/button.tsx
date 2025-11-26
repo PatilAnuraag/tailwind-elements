@@ -17,10 +17,11 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        "link-hover": "text-primary relative after:absolute after:bg-primary after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 hover:after:origin-bottom-left hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300",
         soft: "bg-primary/10 text-primary hover:bg-primary/20",
         neobrutalism: "border-2 border-foreground bg-primary text-primary-foreground shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] dark:hover:shadow-none",
         gradient: "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white hover:opacity-90 border-0",
-        glass: "bg-black/5 text-foreground border border-black/10 hover:bg-black/10 shadow-sm backdrop-blur-md dark:bg-white/10 dark:text-white dark:border-white/20 dark:hover:bg-white/20",
+        shine: "relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 after:absolute after:top-0 after:h-full after:w-1/2 after:-translate-x-[200%] after:skew-x-[-20deg] after:bg-gradient-to-r after:from-transparent after:via-white/20 after:to-transparent hover:after:animate-shine",
       },
       size: {
         default: "h-10 px-4 py-2",

@@ -11,7 +11,6 @@ const checkboxVariants = cva(
         default: "rounded-sm",
         circle: "rounded-full",
         neobrutalism: "rounded-none border-2 border-foreground bg-background text-foreground data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] data-[state=checked]:shadow-none data-[state=checked]:translate-x-[2px] data-[state=checked]:translate-y-[2px]",
-        glass: "rounded-sm border-black/10 bg-black/5 dark:border-primary/20 dark:bg-primary/10 backdrop-blur-sm data-[state=checked]:bg-primary/80 dark:data-[state=checked]:bg-primary/60 data-[state=checked]:text-primary-foreground",
       },
     },
     defaultVariants: {

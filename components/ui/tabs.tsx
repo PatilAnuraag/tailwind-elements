@@ -1,7 +1,7 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
 
-type TabsVariant = "default" | "underline" | "neobrutalism" | "glass";
+type TabsVariant = "default" | "underline" | "neobrutalism" | "pills" | "enclosed";
 
 const TabsContext = React.createContext<{
   activeTab: string;
@@ -21,7 +21,7 @@ const Tabs = ({
   defaultValue?: string;
   value?: string;
   onValueChange?: (value: string) => void;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   variant?: TabsVariant;
 }) => {
@@ -83,7 +83,8 @@ const TabsList = React.forwardRef<
           variant === "default" && "rounded-lg bg-muted",
           variant === "underline" && "justify-start border-b w-full rounded-none bg-transparent p-0",
           variant === "neobrutalism" && "bg-transparent border-2 border-foreground gap-2 p-2 h-auto",
-          variant === "glass" && "bg-black/5 dark:bg-primary/5 backdrop-blur-sm border border-black/5 dark:border-primary/10 rounded-full",
+          variant === "pills" && "bg-muted/50 rounded-full p-1 gap-1",
+          variant === "enclosed" && "border rounded-t-lg border-b-0 bg-muted/20 p-0 h-auto justify-start",
           className
         )}
         {...props}
@@ -118,11 +119,13 @@ const TabsTrigger = React.forwardRef<
         
         variant === "default" && "rounded-md data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow",
         
-        variant === "underline" && "rounded-none data-[state=active]:text-foreground data-[state=active]:border-b-2 data-[state=active]:border-primary",
+        variant === "underline" && "rounded-none border-b-2 border-transparent data-[state=active]:text-foreground data-[state=active]:border-primary",
         
         variant === "neobrutalism" && "border-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-muted/20",
 
-        variant === "glass" && "rounded-full data-[state=active]:bg-white/80 dark:data-[state=active]:bg-primary/20 data-[state=active]:text-foreground dark:data-[state=active]:text-primary data-[state=active]:shadow-sm hover:bg-black/5 dark:hover:bg-white/10",
+        variant === "pills" && "rounded-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-4",
+
+        variant === "enclosed" && "rounded-none border-r last:border-r-0 border-border/50 data-[state=active]:bg-background data-[state=active]:text-foreground first:rounded-tl-lg px-4 py-2 bg-transparent",
 
         className
       )}
@@ -148,6 +151,7 @@ const TabsContent = React.forwardRef<
       tabIndex={0}
       className={cn(
         "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 animate-fade-in",
+        context.variant === "enclosed" && "border rounded-b-lg p-4 mt-0 bg-background",
         className
       )}
       {...props}

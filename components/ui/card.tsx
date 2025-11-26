@@ -11,7 +11,7 @@ const cardVariants = cva(
         ghost: "border-none shadow-none bg-muted/40",
         interactive: "border bg-card shadow transition-all hover:shadow-md hover:scale-[1.01] cursor-pointer",
         neobrutalism: "border-2 border-foreground bg-card shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]",
-        glass: "bg-white/60 border-black/5 shadow-xl backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5)] dark:bg-white/5 dark:border-white/10 dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]",
+        brutal: "border-2 border-foreground bg-primary text-primary-foreground rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]",
       },
     },
     defaultVariants: {

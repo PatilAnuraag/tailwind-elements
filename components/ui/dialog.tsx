@@ -19,7 +19,7 @@ const useDialog = () => {
 };
 
 interface DialogProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   defaultOpen?: boolean;
@@ -102,7 +102,7 @@ const DialogTrigger = React.forwardRef<
 });
 DialogTrigger.displayName = "DialogTrigger";
 
-const DialogPortal = ({ children }: { children: React.ReactNode }) => {
+const DialogPortal = ({ children }: { children?: React.ReactNode }) => {
   const { open } = useDialog();
   if (!open) return null;
   return createPortal(
@@ -139,7 +139,6 @@ const dialogContentVariants = cva(
       variant: {
         default: "border bg-background shadow-lg",
         neobrutalism: "border-2 border-foreground bg-background shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] rounded-none",
-        glass: "bg-white/80 border-black/5 shadow-[0_8px_32px_0_rgba(0,0,0,0.1)] backdrop-blur-2xl ring-1 ring-black/5 rounded-2xl dark:bg-black/20 dark:border-white/10 dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] dark:ring-white/5",
       },
     },
     defaultVariants: {

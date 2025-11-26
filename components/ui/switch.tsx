@@ -9,7 +9,6 @@ const switchVariants = cva(
       variant: {
         default: "",
         neobrutalism: "rounded-none border-2 border-foreground dark:border-white",
-        glass: "border-black/5 bg-black/5 dark:border-primary/20 dark:bg-primary/10 backdrop-blur-sm",
       },
       checked: {
         true: "bg-primary",
@@ -25,11 +24,6 @@ const switchVariants = cva(
         variant: "neobrutalism",
         checked: false,
         className: "bg-background",
-      },
-      {
-        variant: "glass",
-        checked: true,
-        className: "bg-primary/80 dark:bg-primary/60",
       },
     ],
     defaultVariants: {
@@ -47,7 +41,6 @@ const thumbVariants = cva(
       variant: {
         default: "",
         neobrutalism: "rounded-none border border-foreground shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]",
-        glass: "bg-white shadow-none",
       },
       checked: {
         true: "",

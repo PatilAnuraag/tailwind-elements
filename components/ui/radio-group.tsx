@@ -10,7 +10,6 @@ const radioGroupItemVariants = cva(
       variant: {
         default: "",
         neobrutalism: "rounded-none border-2 border-foreground bg-background shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] data-[state=checked]:shadow-none data-[state=checked]:translate-x-[2px] data-[state=checked]:translate-y-[2px]",
-        glass: "border-black/10 bg-black/5 dark:border-primary/20 dark:bg-primary/10 backdrop-blur-sm data-[state=checked]:bg-primary/80 dark:data-[state=checked]:bg-primary/60 data-[state=checked]:text-primary-foreground",
       },
     },
     defaultVariants: {
@@ -22,7 +21,7 @@ const radioGroupItemVariants = cva(
 type RadioGroupContextType = {
   value: string
   onValueChange: (value: string) => void
-  variant: "default" | "neobrutalism" | "glass"
+  variant: "default" | "neobrutalism"
 }
 
 const RadioGroupContext = React.createContext<RadioGroupContextType | null>(null)
@@ -34,7 +33,7 @@ const RadioGroup = React.forwardRef<
     defaultValue?: string
     onValueChange?: (value: string) => void
     name?: string
-    variant?: "default" | "neobrutalism" | "glass"
+    variant?: "default" | "neobrutalism"
   }
 >(({ className, children, value: controlledValue, defaultValue, onValueChange, name, variant = "default", ...props }, ref) => {
   const [uncontrolledValue, setUncontrolledValue] = React.useState(defaultValue || "")

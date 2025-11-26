@@ -14,7 +14,7 @@ type SelectContextType = {
   highlightedIndex: number;
   setHighlightedIndex: React.Dispatch<React.SetStateAction<number>>;
   itemsRef: React.MutableRefObject<Map<string, HTMLDivElement>>;
-  variant: "default" | "neobrutalism" | "glass";
+  variant: "default" | "neobrutalism";
 };
 
 const SelectContext = React.createContext<SelectContextType | null>(null);
@@ -27,7 +27,7 @@ const useSelect = () => {
 
 // Root
 interface SelectProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   value?: string;
   onValueChange?: (value: string) => void;
   defaultValue?: string;
@@ -48,7 +48,7 @@ const Select = ({
   const itemsRef = React.useRef(new Map<string, HTMLDivElement>());
   
   // State to hold variant from trigger to pass to content
-  const [variant, setVariant] = React.useState<"default" | "neobrutalism" | "glass">("default");
+  const [variant, setVariant] = React.useState<"default" | "neobrutalism">("default");
 
   const [_, setUpdateCounter] = React.useState(0);
   const notifyUpdate = React.useCallback(() => setUpdateCounter(c => c + 1), []);
@@ -133,7 +133,6 @@ const selectTriggerVariants = cva(
       variant: {
         default: "border-input",
         neobrutalism: "border-2 border-foreground bg-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] rounded-none",
-        glass: "bg-black/5 border-black/10 text-foreground hover:bg-black/10 dark:bg-primary/5 dark:backdrop-blur-sm dark:border-primary/20 dark:text-inherit dark:hover:bg-primary/10",
       },
     },
     defaultVariants: {
@@ -183,7 +182,6 @@ const selectContentVariants = cva(
       variant: {
         default: "bg-popover",
         neobrutalism: "border-2 border-foreground bg-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-none",
-        glass: "bg-white/80 backdrop-blur-xl border-black/5 dark:bg-background/80 dark:backdrop-blur-xl dark:border-primary/20",
       },
     },
     defaultVariants: {
@@ -207,7 +205,7 @@ const SelectContent = React.forwardRef<HTMLDivElement, SelectContentProps>(
     if (!open) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      const items = Array.from(itemsRef.current.values()).filter(el => !el.hasAttribute('disabled'));
+      const items = Array.from(itemsRef.current.values() as Iterable<HTMLDivElement>).filter(el => !el.hasAttribute('disabled'));
       
       switch(e.key) {
         case 'ArrowDown':
@@ -242,7 +240,7 @@ const SelectContent = React.forwardRef<HTMLDivElement, SelectContentProps>(
 
   React.useEffect(() => {
     if (open && highlightedIndex >= 0 && contentRef.current) {
-        const items = Array.from(itemsRef.current.values()).filter(el => !el.hasAttribute('disabled'));
+        const items = Array.from(itemsRef.current.values() as Iterable<HTMLDivElement>).filter(el => !el.hasAttribute('disabled'));
         const item = items[highlightedIndex];
         if (item) {
             item.scrollIntoView({ block: 'nearest' });

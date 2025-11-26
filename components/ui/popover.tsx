@@ -12,7 +12,7 @@ const Popover = ({
   open: controlledOpen,
   onOpenChange,
 }: {
-  children: React.ReactNode
+  children?: React.ReactNode
   open?: boolean
   onOpenChange?: (open: boolean) => void
 }) => {
@@ -87,7 +87,6 @@ const popoverContentVariants = cva(
       variant: {
         default: "rounded-md border bg-popover text-popover-foreground shadow-md",
         neobrutalism: "rounded-none border-2 border-foreground bg-background text-foreground shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]",
-        glass: "rounded-xl border border-black/5 bg-white/80 text-foreground backdrop-blur-2xl shadow-lg ring-1 ring-black/5 dark:border-white/20 dark:bg-gradient-to-br dark:from-violet-500/30 dark:via-purple-500/30 dark:to-fuchsia-500/30 dark:shadow-[0_0_30px_0_rgba(139,92,246,0.3)] dark:ring-white/30 dark:text-white",
       },
     },
     defaultVariants: {

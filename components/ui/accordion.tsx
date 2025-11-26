@@ -2,7 +2,7 @@ import * as React from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "../../lib/utils";
 
-type AccordionVariant = "default" | "boxed" | "neobrutalism" | "glass";
+type AccordionVariant = "default" | "boxed" | "neobrutalism";
 
 const AccordionContext = React.createContext<{
   value: string | string[] | undefined;
@@ -18,7 +18,7 @@ const Accordion = ({
   variant = "default",
   ...props
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   type?: "single" | "multiple";
   collapsible?: boolean;
@@ -93,7 +93,6 @@ const AccordionItem = React.forwardRef<
           variant === "default" && "border-b",
           variant === "boxed" && "border rounded-lg bg-card px-4",
           variant === "neobrutalism" && "border-2 border-foreground bg-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] px-4",
-          variant === "glass" && "border border-black/5 bg-black/5 dark:border-primary/20 dark:bg-primary/5 backdrop-blur-sm px-4 rounded-lg",
           className
         )}
         {...props}

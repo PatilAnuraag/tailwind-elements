@@ -16,10 +16,9 @@ const alertVariants = cva(
           "border-yellow-500/50 text-yellow-600 dark:border-yellow-500 [&>svg]:text-yellow-600",
         info:
           "border-blue-500/50 text-blue-600 dark:border-blue-500 [&>svg]:text-blue-600",
+        "left-accent": "border-l-4 border-l-primary bg-background pl-6",
         neobrutalism:
           "rounded-none border-2 border-foreground bg-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]",
-        glass: 
-          "border-black/5 bg-black/5 dark:border-primary/20 dark:bg-primary/10 backdrop-blur-md text-foreground dark:text-primary [&>svg]:text-foreground dark:[&>svg]:text-primary",
       },
     },
     defaultVariants: {

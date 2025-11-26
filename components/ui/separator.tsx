@@ -8,7 +8,8 @@ const separatorVariants = cva(
     variants: {
       variant: {
         default: "bg-border",
-        glass: "bg-gradient-to-r from-transparent via-black/20 to-transparent dark:via-white/20",
+        dashed: "bg-transparent border-t border-dashed border-border",
+        dotted: "bg-transparent border-t border-dotted border-border",
       },
     },
     defaultVariants: {
@@ -34,6 +35,7 @@ const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>(
       className={cn(
         separatorVariants({ variant }),
         orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
+        (variant === "dashed" || variant === "dotted") && orientation === "vertical" ? "border-l border-t-0 h-full w-[1px]" : "",
         className
       )}
       {...props}

@@ -10,7 +10,6 @@ const sliderTrackVariants = cva(
         default: "h-2",
         thick: "h-4",
         neobrutalism: "h-4 rounded-none border-2 border-foreground bg-background",
-        glass: "h-2 bg-black/10 border border-black/5 dark:bg-primary/20 dark:border-primary/20 backdrop-blur-sm",
       },
     },
     defaultVariants: {
@@ -27,7 +26,6 @@ const sliderThumbVariants = cva(
         default: "h-5 w-5",
         thick: "h-6 w-6 border-4",
         neobrutalism: "h-6 w-6 rounded-none border-2 border-foreground bg-primary shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]",
-        glass: "h-5 w-5 border-black/20 bg-primary/80 dark:border-white/40 dark:bg-primary/60 backdrop-blur-md shadow-sm",
       },
     },
     defaultVariants: {
@@ -168,7 +166,6 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
                className={cn(
                    "absolute h-full bg-primary",
                    variant === "neobrutalism" && "bg-foreground",
-                   variant === "glass" && "bg-primary/60 dark:bg-primary/40"
                )}
                style={{ width: `${((value[0] - min) / (max - min)) * 100}%` }}
              />
@@ -177,7 +174,6 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
                className={cn(
                    "absolute h-full bg-primary",
                    variant === "neobrutalism" && "bg-foreground",
-                   variant === "glass" && "bg-primary/60 dark:bg-primary/40"
                )}
                style={{ 
                  left: `${((Math.min(...value) - min) / (max - min)) * 100}%`,
