@@ -52,17 +52,24 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
     const isControlled = controlledValue !== undefined
     const value = isControlled ? controlledValue! : localValue
 
-    const handleValueChange = (newValue: number[]) => {
-      if (!isControlled) setLocalValue(newValue)
-      onValueChange?.(newValue)
-    }
-
+    // Refs to track state inside event listeners without re-binding
+    const valueRef = React.useRef(value)
+    const activeThumbIndex = React.useRef<number>(0)
     const sliderRef = React.useRef<HTMLDivElement>(null)
     const isDragging = React.useRef(false)
 
+    React.useLayoutEffect(() => {
+        valueRef.current = value
+    })
+
+    const handleValueChange = React.useCallback((newValue: number[]) => {
+      if (!isControlled) setLocalValue(newValue)
+      onValueChange?.(newValue)
+    }, [isControlled, onValueChange])
+
     // Helper to calculate value from mouse position
-    const getValueFromPointer = (clientX: number) => {
-      if (!sliderRef.current) return value[0]
+    const getValueFromPointer = React.useCallback((clientX: number) => {
+      if (!sliderRef.current) return min
       const rect = sliderRef.current.getBoundingClientRect()
       const percentage = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1)
       const rawValue = min + percentage * (max - min)
@@ -70,17 +77,22 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
       const steppedValue = Math.round(rawValue / step) * step
       // Clamp
       return Math.min(Math.max(steppedValue, min), max)
-    }
+    }, [min, max, step])
 
-    // Determine closest thumb for multi-range interaction (simplified for single/range)
-    
     React.useEffect(() => {
       const handleMouseMove = (e: MouseEvent) => {
         if (!isDragging.current) return
+        
         const newValue = getValueFromPointer(e.clientX)
-        // Simple logic for single thumb or replacing first thumb
-        const nextValues = [...value]
-        nextValues[0] = newValue
+        const currentValues = valueRef.current
+        const nextValues = [...currentValues]
+        
+        // Update the active thumb
+        nextValues[activeThumbIndex.current] = newValue
+        
+        // Optional: Sort values to prevent crossover visual glitches if desired
+        // nextValues.sort((a, b) => a - b)
+        
         handleValueChange(nextValues)
       }
 
@@ -96,13 +108,12 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
         document.removeEventListener("mousemove", handleMouseMove)
         document.removeEventListener("mouseup", handleMouseUp)
       }
-    }, [min, max, step, value])
+    }, [getValueFromPointer, handleValueChange])
 
     const handleMouseDown = (e: React.MouseEvent) => {
       isDragging.current = true
       document.body.style.userSelect = "none"
       const newValue = getValueFromPointer(e.clientX)
-      const nextValues = [...value]
       
       // Find closest thumb index
       let closestIndex = 0;
@@ -115,13 +126,15 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
           }
       });
       
+      activeThumbIndex.current = closestIndex;
+
+      const nextValues = [...value]
       nextValues[closestIndex] = newValue;
       handleValueChange(nextValues)
     }
 
-    // Keyboard support - only for first thumb for simplicity in this pure CSS version
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-      const currentValue = value[0]
+    const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+      const currentValue = value[index]
       let newValue = currentValue
 
       switch (e.key) {
@@ -144,8 +157,10 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
       }
       
       e.preventDefault()
+      e.stopPropagation()
+      
       const nextValues = [...value]
-      nextValues[0] = newValue
+      nextValues[index] = newValue
       handleValueChange(nextValues)
     }
 
@@ -193,8 +208,13 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
                     aria-valuemax={max}
                     aria-valuenow={val}
                     tabIndex={0}
-                    onKeyDown={handleKeyDown}
-                    onMouseDown={() => { isDragging.current = true; document.body.style.userSelect = "none"; }}
+                    onKeyDown={(e) => handleKeyDown(e, index)}
+                    onMouseDown={(e) => { 
+                        e.stopPropagation(); // Prevent double trigger from track click
+                        isDragging.current = true; 
+                        activeThumbIndex.current = index;
+                        document.body.style.userSelect = "none"; 
+                    }}
                     className={cn(sliderThumbVariants({ variant }))}
                     style={{ left: `calc(${percentage}% - ${variant === 'thick' || variant === 'neobrutalism' ? 12 : 10}px)` }}
                 />
