@@ -65,7 +65,7 @@ const Accordion = ({
         ref={ref} 
         onKeyDown={handleKeyDown} 
         className={cn(
-            variant === "boxed" || variant === "neobrutalism" ? "space-y-2" : "", 
+            variant === "boxed" || variant === "neobrutalism" ? "space-y-3" : "", 
             className
         )} 
         {...props}
@@ -90,8 +90,9 @@ const AccordionItem = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          variant === "default" && "border-b",
-          variant === "boxed" && "border rounded-lg bg-card px-4",
+          "transition-all",
+          variant === "default" && "border-b last:border-b-0",
+          variant === "boxed" && "border rounded-xl bg-card px-4 shadow-sm",
           variant === "neobrutalism" && "border-2 border-foreground bg-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] px-4",
           className
         )}
@@ -130,13 +131,13 @@ const AccordionTrigger = React.forwardRef<
         aria-expanded={isOpen}
         data-state={isOpen ? "open" : "closed"}
         className={cn(
-          "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm",
+          "flex flex-1 items-center justify-between py-4 font-medium transition-all [&[data-state=open]>svg]:rotate-180 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm text-left hover:text-primary",
           className
         )}
         {...props}
       >
         {children}
-        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-300 text-muted-foreground" />
       </button>
     </div>
   );
@@ -159,14 +160,14 @@ const AccordionContent = React.forwardRef<
   return (
     <div
       className={cn(
-        "overflow-hidden text-sm transition-all duration-300 ease-in-out",
-        isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        "overflow-hidden text-sm transition-all duration-300 ease-in-out will-change-[grid-template-rows]",
+        isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
       )}
       style={{ display: "grid" }}
     >
       <div
         ref={ref}
-        className={cn("min-h-0 pb-4 pt-0", className)}
+        className={cn("min-h-0 pb-4 pt-1 text-muted-foreground", className)}
         {...props}
       >
         {children}

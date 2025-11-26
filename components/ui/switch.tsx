@@ -71,18 +71,32 @@ const thumbVariants = cva(
 );
 
 export interface SwitchProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "checked" | "defaultChecked" | "value">,
     VariantProps<typeof switchVariants> {
-  onCheckedChange?: (checked: boolean) => void;
   checked?: boolean;
+  defaultChecked?: boolean;
+  onCheckedChange?: (checked: boolean) => void;
   name?: string;
+  value?: string;
 }
 
 const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
-  ({ className, size, variant, checked = false, onCheckedChange, onClick, name, value, ...props }, ref) => {
+  ({ className, size, variant, checked: controlledChecked, defaultChecked = false, onCheckedChange, onClick, name, value, ...props }, ref) => {
+    
+    // Support uncontrolled state
+    const [internalChecked, setInternalChecked] = React.useState(defaultChecked);
+    const isControlled = controlledChecked !== undefined;
+    const checked = isControlled ? controlledChecked : internalChecked;
+
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       if (props.disabled) return;
-      onCheckedChange?.(!checked);
+      
+      const newValue = !checked;
+      if (!isControlled) {
+        setInternalChecked(newValue);
+      }
+      
+      onCheckedChange?.(newValue);
       onClick?.(event);
     };
 
@@ -92,13 +106,13 @@ const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
         role="switch"
         aria-checked={checked}
         data-state={checked ? "checked" : "unchecked"}
-        className={cn(switchVariants({ size, checked, variant, className }))}
+        className={cn(switchVariants({ size, checked: !!checked, variant, className }))}
         ref={ref}
         onClick={handleClick}
         {...props}
       >
-        <span className={cn(thumbVariants({ size, checked, variant }))} />
-        {name && <input type="checkbox" className="hidden" name={name} value={value} checked={checked} readOnly />}
+        <span className={cn(thumbVariants({ size, checked: !!checked, variant }))} />
+        {name && <input type="checkbox" className="hidden" name={name} value={value} checked={!!checked} readOnly />}
       </button>
     );
   }

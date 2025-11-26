@@ -151,7 +151,7 @@ const SWITCH_CODE = `
   </div>
   
   <div className="flex items-center space-x-2">
-    <Switch id="neo-mode" variant="neobrutalism" />
+    <Switch id="neo-mode" variant="neobrutalism" defaultChecked />
     <Label htmlFor="neo-mode">Neobrutalism</Label>
   </div>
 
@@ -1075,7 +1075,7 @@ export default function App() {
               <div className="w-full space-y-4 max-w-[280px]">
                 <div className="flex items-center justify-between border p-3 rounded-lg">
                   <Label htmlFor="s1" className="text-foreground">Default</Label>
-                  <Switch id="s1" />
+                  <Switch id="s1" defaultChecked />
                 </div>
                 <div className="flex items-center justify-between border-2 border-foreground p-3 bg-white dark:bg-black">
                   <Label htmlFor="s2" className="text-foreground font-bold">Neobrutalism</Label>
@@ -1291,7 +1291,7 @@ export default function App() {
                       <FormItem>
                         <FormLabel>Filled Textarea</FormLabel>
                         <FormControl>
-                           <Textarea placeholder="Gray background style..." variant="filled" className="resize-none" rows={3} />
+                           <Textarea placeholder="Tell us more..." variant="filled" className="resize-none" rows={3} />
                         </FormControl>
                       </FormItem>
 
@@ -1650,14 +1650,19 @@ export default function App() {
               description="Interactive headings that reveal content."
               code={ACCORDION_CODE}
               details={ACCORDION_DETAILS}
+              className="lg:col-span-2"
             >
-              <div className="w-full max-w-[280px] space-y-6">
+              <div className="w-full max-w-[500px] space-y-6">
                  <div>
                     <Label className="mb-2 block text-xs uppercase text-muted-foreground">Default</Label>
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="item-1">
                         <AccordionTrigger>Is it accessible?</AccordionTrigger>
                         <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
+                        </AccordionItem>
+                         <AccordionItem value="item-2">
+                        <AccordionTrigger>Is it styled?</AccordionTrigger>
+                        <AccordionContent>Yes. It comes with default styles that matches the other components' aesthetic.</AccordionContent>
                         </AccordionItem>
                     </Accordion>
                  </div>
@@ -1673,15 +1678,15 @@ export default function App() {
                   </div>
 
                    <div>
-                     <Label className="mb-2 block text-xs uppercase text-muted-foreground">Multiple</Label>
+                     <Label className="mb-2 block text-xs uppercase text-muted-foreground">Multiple Boxed</Label>
                      <Accordion type="multiple" className="w-full" variant="boxed">
                         <AccordionItem value="item-1">
-                             <AccordionTrigger>Item 1</AccordionTrigger>
-                             <AccordionContent>Content 1</AccordionContent>
+                             <AccordionTrigger>Personal Settings</AccordionTrigger>
+                             <AccordionContent>Manage your personal details here.</AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="item-2">
-                             <AccordionTrigger>Item 2</AccordionTrigger>
-                             <AccordionContent>Content 2</AccordionContent>
+                             <AccordionTrigger>Security</AccordionTrigger>
+                             <AccordionContent>Password and authentication settings.</AccordionContent>
                         </AccordionItem>
                     </Accordion>
                   </div>
