@@ -47,29 +47,29 @@ import { cn } from "./lib/utils";
 
 const BUTTON_CODE = `
 <div className="flex flex-wrap items-center gap-4">
-  {/* Standard Variants */}
+  {/* Styles */}
   <Button variant="default">Default</Button>
   <Button variant="secondary">Secondary</Button>
-  <Button variant="destructive">Destructive</Button>
   <Button variant="outline">Outline</Button>
   <Button variant="ghost">Ghost</Button>
   <Button variant="link">Link</Button>
+  <Button variant="soft">Soft</Button>
 
   {/* Special Effects */}
-  <Button variant="shine">Shine Effect</Button>
-  <Button variant="link-hover">Animated Link</Button>
-  <Button variant="gradient" shape="pill">Gradient Pill</Button>
+  <Button variant="shine">Shine</Button>
+  <Button variant="link-hover">Link Hover</Button>
+  <Button variant="gradient">Gradient</Button>
   <Button variant="neobrutalism">Neobrutalism</Button>
-  <Button variant="soft">Soft UI</Button>
 
-  {/* Sizes */}
+  {/* Shapes & Sizes */}
+  <Button shape="pill">Pill</Button>
+  <Button shape="square">Square</Button>
   <Button size="sm">Small</Button>
   <Button size="lg">Large</Button>
   <Button size="icon"><Plus /></Button>
-  
+
   {/* States */}
   <Button isLoading>Loading</Button>
-  <Button disabled>Disabled</Button>
 </div>
 `.trim();
 
@@ -79,20 +79,20 @@ const BUTTON_DETAILS = (
       Displays a button or a component that looks like a button.
     </p>
     <div>
-      <h4 className="font-semibold text-foreground mb-1">Variants</h4>
+      <h4 className="font-semibold text-foreground mb-1">Visual Variants</h4>
       <ul className="list-disc pl-4 space-y-1">
-        <li><strong>Shine:</strong> Animated shimmer effect on hover, great for CTA.</li>
-        <li><strong>Link Hover:</strong> Text button with animated underline.</li>
-        <li><strong>Soft:</strong> Subtle background with primary text (bg-primary/10).</li>
-        <li><strong>Neobrutalism:</strong> High contrast, hard borders and shadows.</li>
-        <li><strong>Gradient:</strong> Stylish gradient background.</li>
+        <li><strong>Shine:</strong> Animated glare effect on hover.</li>
+        <li><strong>Link Hover:</strong> Text with animated underline.</li>
+        <li><strong>Neobrutalism:</strong> High contrast, hard borders and shadow offset.</li>
+        <li><strong>Soft:</strong> Subtle background tint.</li>
+        <li><strong>Gradient:</strong> Multi-color gradient background.</li>
       </ul>
     </div>
     <div>
       <h4 className="font-semibold text-foreground mb-1">Shapes</h4>
       <ul className="list-disc pl-4 space-y-1">
-        <li><strong>Pill:</strong> Fully rounded corners.</li>
-        <li><strong>Square:</strong> No rounded corners.</li>
+        <li><strong>Pill:</strong> Fully rounded sides.</li>
+        <li><strong>Square:</strong> Sharp corners.</li>
       </ul>
     </div>
   </div>
@@ -146,12 +146,13 @@ const DIALOG_DETAILS = (
 const SWITCH_CODE = `
 <div className="space-y-4">
   <div className="flex items-center space-x-2">
-    <Switch id="airplane-mode" />
+    {/* Controlled or Uncontrolled (defaultChecked) */}
+    <Switch id="airplane-mode" defaultChecked />
     <Label htmlFor="airplane-mode">Airplane Mode</Label>
   </div>
   
   <div className="flex items-center space-x-2">
-    <Switch id="neo-mode" variant="neobrutalism" defaultChecked />
+    <Switch id="neo-mode" variant="neobrutalism" />
     <Label htmlFor="neo-mode">Neobrutalism</Label>
   </div>
 
@@ -179,10 +180,10 @@ const SWITCH_DETAILS = (
       </ul>
     </div>
     <div>
-      <h4 className="font-semibold text-foreground mb-1">Accessibility</h4>
+      <h4 className="font-semibold text-foreground mb-1">Key Features</h4>
       <ul className="list-disc pl-4 space-y-1">
-        <li>Uses <code>role="switch"</code> and <code>aria-checked</code>.</li>
-        <li>Supports <code>Space</code> and <code>Enter</code> to toggle state.</li>
+        <li><strong>Uncontrolled:</strong> Works with <code>defaultChecked</code> - no React state needed.</li>
+        <li><strong>Hidden Input:</strong> Renders a hidden input for form submission if <code>name</code> is provided.</li>
       </ul>
     </div>
   </div>
@@ -245,6 +246,7 @@ const SELECT_DETAILS = (
 
 const CARD_CODE = `
 <div className="grid grid-cols-2 gap-4">
+  {/* Default */}
   <Card>
     <CardHeader>
       <CardTitle>Default</CardTitle>
@@ -253,11 +255,22 @@ const CARD_CODE = `
     <CardContent>Content</CardContent>
   </Card>
 
+  {/* Brutal */}
   <Card variant="brutal">
     <CardHeader>
       <CardTitle className="text-white">Brutal</CardTitle>
     </CardHeader>
     <CardContent>Solid bold style.</CardContent>
+  </Card>
+
+  {/* Ghost */}
+  <Card variant="ghost">
+     <CardContent className="pt-6">No border, subtle bg.</CardContent>
+  </Card>
+
+  {/* Neobrutalism */}
+  <Card variant="neobrutalism">
+     <CardContent className="pt-6">Hard borders.</CardContent>
   </Card>
 </div>
 `.trim();
@@ -274,20 +287,37 @@ const CARD_DETAILS = (
         <li><strong>Brutal:</strong> Solid primary color background with high contrast text.</li>
         <li><strong>Neobrutalism:</strong> Hard black borders and offset shadows.</li>
         <li><strong>Interactive:</strong> Hover scale and shadow effect.</li>
+        <li><strong>Ghost:</strong> No border, subtle background, flat look.</li>
       </ul>
     </div>
   </div>
 );
 
 const TABS_CODE = `
+{/* Pills Variant */}
 <Tabs defaultValue="account" className="w-[400px]" variant="pills">
   <TabsList>
     <TabsTrigger value="account">Account</TabsTrigger>
     <TabsTrigger value="password">Password</TabsTrigger>
   </TabsList>
-  <TabsContent value="account">
-    {/* Account view */}
-  </TabsContent>
+  <TabsContent value="account">...</TabsContent>
+</Tabs>
+
+{/* Enclosed Variant */}
+<Tabs defaultValue="account" className="w-[400px]" variant="enclosed">
+  <TabsList>
+    <TabsTrigger value="account">Account</TabsTrigger>
+    <TabsTrigger value="password">Password</TabsTrigger>
+  </TabsList>
+  <TabsContent value="account">...</TabsContent>
+</Tabs>
+
+{/* Underline Variant */}
+<Tabs defaultValue="account" className="w-[400px]" variant="underline">
+  <TabsList>
+    <TabsTrigger value="account">Account</TabsTrigger>
+    <TabsTrigger value="password">Password</TabsTrigger>
+  </TabsList>
 </Tabs>
 `.trim();
 
@@ -316,12 +346,23 @@ const TABS_DETAILS = (
 );
 
 const ACCORDION_CODE = `
-<Accordion type="single" collapsible className="w-full" variant="boxed">
+{/* Default Single */}
+<Accordion type="single" collapsible className="w-full">
   <AccordionItem value="item-1">
     <AccordionTrigger>Is it accessible?</AccordionTrigger>
-    <AccordionContent>
-      Yes. It adheres to the WAI-ARIA design pattern.
-    </AccordionContent>
+    <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+{/* Multiple Boxed */}
+<Accordion type="multiple" variant="boxed" className="w-full">
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Item 1</AccordionTrigger>
+    <AccordionContent>Content 1</AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-2">
+    <AccordionTrigger>Item 2</AccordionTrigger>
+    <AccordionContent>Content 2</AccordionContent>
   </AccordionItem>
 </Accordion>
 `.trim();
@@ -340,10 +381,10 @@ const ACCORDION_DETAILS = (
       </ul>
     </div>
     <div>
-      <h4 className="font-semibold text-foreground mb-1">Accessibility</h4>
+      <h4 className="font-semibold text-foreground mb-1">Features</h4>
       <ul className="list-disc pl-4 space-y-1">
-        <li>Header buttons control <code>aria-expanded</code> state.</li>
-        <li>Supports Up/Down arrow key navigation between headers.</li>
+        <li><strong>Multiple:</strong> Set <code>type="multiple"</code> to allow multiple sections to be open at once.</li>
+        <li><strong>Keyboard:</strong> Supports Up/Down arrow key navigation between headers.</li>
       </ul>
     </div>
   </div>
@@ -599,23 +640,17 @@ const POPOVER_CODE = `
   </PopoverTrigger>
   <PopoverContent className="w-80">
     <div className="grid gap-4">
-      <div className="space-y-2">
-        <h4 className="font-medium leading-none">Dimensions</h4>
-        <p className="text-sm text-muted-foreground">
-          Set the dimensions for the layer.
-        </p>
-      </div>
-      <div className="grid gap-2">
-        <div className="grid grid-cols-3 items-center gap-4">
-          <Label htmlFor="width">Width</Label>
-          <Input id="width" defaultValue="100%" className="col-span-2 h-8" />
-        </div>
-        <div className="grid grid-cols-3 items-center gap-4">
-          <Label htmlFor="height">Height</Label>
-          <Input id="height" defaultValue="25px" className="col-span-2 h-8" />
-        </div>
-      </div>
+      {/* Content */}
     </div>
+  </PopoverContent>
+</Popover>
+
+<Popover>
+  <PopoverTrigger asChild>
+    <Button variant="neobrutalism">Neo Popover</Button>
+  </PopoverTrigger>
+  <PopoverContent variant="neobrutalism" className="w-80">
+    {/* Content */}
   </PopoverContent>
 </Popover>
 `.trim();
@@ -645,25 +680,31 @@ const COMPREHENSIVE_FORM_CODE = `
 <div className="space-y-6">
   <div className="grid grid-cols-2 gap-4">
     <FormItem>
-      <FormLabel>Username</FormLabel>
+      <FormLabel>Default Input</FormLabel>
       <FormControl>
         <Input placeholder="John Doe" />
       </FormControl>
     </FormItem>
     <FormItem>
-       <FormLabel>Email (Material)</FormLabel>
+       <FormLabel>Material Style</FormLabel>
        <FormControl>
-         <Input placeholder="john@example.com" variant="material" />
+         <Input placeholder="Bottom border only" variant="material" />
        </FormControl>
     </FormItem>
   </div>
+  
+  <FormItem>
+      <FormLabel>Neobrutalism</FormLabel>
+      <FormControl>
+        <Input placeholder="Hard borders" variant="neobrutalism" />
+      </FormControl>
+  </FormItem>
 
   <FormItem>
     <FormLabel>Bio (Filled)</FormLabel>
     <FormControl>
       <Textarea placeholder="Tell us more..." variant="filled" />
     </FormControl>
-    <FormDescription>This will be displayed on your profile.</FormDescription>
   </FormItem>
 
   <div className="grid grid-cols-2 gap-4">
@@ -685,10 +726,13 @@ const COMPREHENSIVE_FORM_DETAILS = (
       A complete suite of form components including structural wrappers, inputs, textareas, and checkboxes.
     </p>
     <div>
-      <h4 className="font-semibold text-foreground mb-1">Variants</h4>
+      <h4 className="font-semibold text-foreground mb-1">Input Variants</h4>
       <ul className="list-disc pl-4 space-y-1">
-        <li><strong>Inputs:</strong> Default, Filled (gray bg), Flushed (underline), Material (bottom border), Neobrutalism.</li>
-        <li><strong>Checkbox:</strong> Default, Circle, Neobrutalism.</li>
+        <li><strong>Default:</strong> Standard bordered input.</li>
+        <li><strong>Filled:</strong> Gray background, no border.</li>
+        <li><strong>Flushed:</strong> Underline only (classic style).</li>
+        <li><strong>Material:</strong> Bottom border with animation support.</li>
+        <li><strong>Neobrutalism:</strong> Hard borders and shadow offset.</li>
       </ul>
     </div>
     <div>
@@ -727,7 +771,9 @@ const SEPARATOR_DETAILS = (
     <div>
       <h4 className="font-semibold text-foreground mb-1">Variants</h4>
       <ul className="list-disc pl-4 space-y-1">
-        <li><strong>Dashed / Dotted:</strong> Styles for different visual separation needs.</li>
+        <li><strong>Default:</strong> Solid line.</li>
+        <li><strong>Dashed:</strong> Dashed line style.</li>
+        <li><strong>Dotted:</strong> Dotted line style.</li>
       </ul>
     </div>
     <div>
@@ -762,7 +808,7 @@ const SKELETON_DETAILS = (
     <div>
       <h4 className="font-semibold text-foreground mb-1">Features</h4>
       <ul className="list-disc pl-4 space-y-1">
-        <li><strong>Variants:</strong> Default (rounded), Circle.</li>
+        <li><strong>Variants:</strong> Default (rounded), Circle (fully rounded).</li>
         <li><strong>Animation:</strong> Subtle pulse animation to indicate loading state.</li>
       </ul>
     </div>
@@ -1605,6 +1651,17 @@ export default function App() {
                            <p className="text-sm text-muted-foreground">Card with top image.</p>
                        </CardContent>
                    </Card>
+
+                   {/* Ghost Card */}
+                    <Card variant="ghost">
+                    <CardHeader>
+                      <CardTitle>Ghost</CardTitle>
+                      <CardDescription>No borders</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground">Subtle background integration.</p>
+                    </CardContent>
+                  </Card>
                </div>
             </ComponentShowcase>
 
