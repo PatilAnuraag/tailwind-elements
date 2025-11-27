@@ -145,9 +145,8 @@ const selectTriggerVariants = cva(
   }
 );
 
-interface SelectTriggerProps 
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-  VariantProps<typeof selectTriggerVariants> {}
+type SelectTriggerProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+  VariantProps<typeof selectTriggerVariants>
 
 const SelectTrigger = React.forwardRef<HTMLButtonElement, SelectTriggerProps>(
   ({ className, children, variant, ...props }, ref) => {
@@ -196,9 +195,8 @@ const selectContentVariants = cva(
   }
 );
 
-interface SelectContentProps 
-  extends React.HTMLAttributes<HTMLDivElement>,
-  VariantProps<typeof selectContentVariants> {}
+type SelectContentProps = React.HTMLAttributes<HTMLDivElement> &
+  VariantProps<typeof selectContentVariants>
 
 const SelectContent = React.forwardRef<HTMLDivElement, SelectContentProps>(
   ({ className, children, variant, ...props }, ref) => {

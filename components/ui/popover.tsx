@@ -95,9 +95,8 @@ const popoverContentVariants = cva(
   }
 )
 
-interface PopoverContentProps 
-  extends React.HTMLAttributes<HTMLDivElement>,
-  VariantProps<typeof popoverContentVariants> {
+type PopoverContentProps = React.HTMLAttributes<HTMLDivElement> &
+  VariantProps<typeof popoverContentVariants> & {
   align?: "center" | "start" | "end"
   sideOffset?: number
 }

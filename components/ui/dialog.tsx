@@ -147,9 +147,8 @@ const dialogContentVariants = cva(
   }
 );
 
-interface DialogContentProps 
-  extends React.HTMLAttributes<HTMLDivElement>,
-  VariantProps<typeof dialogContentVariants> {}
+type DialogContentProps = React.HTMLAttributes<HTMLDivElement> &
+  VariantProps<typeof dialogContentVariants>
 
 const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps>(
   ({ className, children, variant, ...props }, ref) => {

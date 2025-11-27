@@ -34,9 +34,8 @@ const sliderThumbVariants = cva(
   }
 )
 
-interface SliderProps 
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "defaultValue">,
-    VariantProps<typeof sliderTrackVariants> {
+type SliderProps = Omit<React.HTMLAttributes<HTMLDivElement>, "defaultValue"> &
+    VariantProps<typeof sliderTrackVariants> & {
   min?: number
   max?: number
   step?: number

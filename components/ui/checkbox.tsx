@@ -19,9 +19,8 @@ const checkboxVariants = cva(
   }
 )
 
-interface CheckboxProps 
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof checkboxVariants> {
+type CheckboxProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+    VariantProps<typeof checkboxVariants> & {
   checked?: boolean
   onCheckedChange?: (checked: boolean) => void
   name?: string

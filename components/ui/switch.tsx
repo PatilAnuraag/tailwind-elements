@@ -70,9 +70,8 @@ const thumbVariants = cva(
   }
 );
 
-export interface SwitchProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "checked" | "defaultChecked" | "value">,
-    VariantProps<typeof switchVariants> {
+export type SwitchProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "checked" | "defaultChecked" | "value"> &
+    VariantProps<typeof switchVariants> & {
   checked?: boolean;
   defaultChecked?: boolean;
   onCheckedChange?: (checked: boolean) => void;

@@ -17,7 +17,7 @@ const avatarVariants = cva(
   }
 )
 
-interface AvatarProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof avatarVariants> {}
+type AvatarProps = React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof avatarVariants>
 
 const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
   ({ className, shape, ...props }, ref) => (

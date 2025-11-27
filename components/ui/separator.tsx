@@ -18,7 +18,7 @@ const separatorVariants = cva(
   }
 )
 
-interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof separatorVariants> {
+type SeparatorProps = React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof separatorVariants> & {
   orientation?: "horizontal" | "vertical"
   decorative?: boolean
 }
