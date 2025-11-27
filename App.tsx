@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { 
   User, Bell, Layout, Moon, Sun, ArrowRight, Layers, Palette, Accessibility, 
   Code, Eye, FileText, List, Box, Tag, AlertCircle, CheckSquare, AlignLeft, Image as ImageIcon,
-  Sliders, RadioReceiver, ToggleLeft, MessageSquare, Divide, Loader2, PenTool, BookOpen, MousePointerClick, Plus, Info, AlertTriangle, X, Check, Search, Settings, MoreHorizontal, CreditCard, Star, ChevronRight, Upload, Calendar, Mail, Lock
+  Sliders, RadioReceiver, ToggleLeft, MessageSquare, Divide, Loader2, PenTool, BookOpen, MousePointerClick, Plus, Info, AlertTriangle, X, Check, Search, Settings, MoreHorizontal, CreditCard, Star, ChevronRight, Upload, Calendar, Mail, Lock, Bold, Italic, Underline, Home
 } from 'lucide-react';
 import { Button } from './components/ui/button';
 import {
@@ -47,6 +47,10 @@ import { Progress } from "./components/ui/progress";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "./components/ui/tooltip";
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from "./components/ui/breadcrumb";
 import { MaskedInput } from "./components/ui/masked-input";
+import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from "./components/ui/input-otp";
+import { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption } from "./components/ui/table";
+import { Toaster } from "./components/ui/toaster";
+import { useToast } from "./components/ui/use-toast";
 import { cn } from "./lib/utils";
 
 // --- Components ---
@@ -114,393 +118,60 @@ const ComponentShowcase = ({ title, children, code, details }: { title: string, 
   )
 }
 
-// --- Code Snippets & Details ---
+const ToastDemo = () => {
+    const { toast } = useToast()
+    return (
+        <div className="flex flex-wrap gap-4">
+            <Button onClick={() => toast({ title: "Scheduled: Catch up", description: "Friday, February 10, 2024 at 5:57 PM" })}>
+                Default Toast
+            </Button>
+            <Button variant="destructive" onClick={() => toast({ variant: "destructive", title: "Uh oh! Something went wrong.", description: "There was a problem with your request." })}>
+                Destructive
+            </Button>
+            <Button variant="neobrutalism" onClick={() => toast({ variant: "neobrutalism", title: "Neobrutalism", description: "This is a raw toast style." })}>
+                Neobrutalism
+            </Button>
+        </div>
+    )
+}
+
+// --- Code Snippets ---
 
 const BUTTON_CODE = `
-{/* Variants */}
-<Button variant="default">Default</Button>
+<Button>Default</Button>
 <Button variant="secondary">Secondary</Button>
+<Button variant="destructive">Destructive</Button>
 <Button variant="outline">Outline</Button>
 <Button variant="ghost">Ghost</Button>
 <Button variant="link">Link</Button>
 <Button variant="soft">Soft</Button>
 <Button variant="shine">Shine</Button>
 <Button variant="neobrutalism">Neobrutalism</Button>
-
-{/* Shapes */}
-<Button shape="pill">Pill</Button>
-<Button shape="square">Square</Button>
-
-{/* Sizes */}
-<Button size="sm">Small</Button>
-<Button size="lg">Large</Button>
-<Button size="icon"><Plus /></Button>
-
-{/* States */}
-<Button isLoading>Loading</Button>
-<Button disabled>Disabled</Button>
 `.trim();
 
 const BUTTON_DETAILS = (
   <div className="space-y-4 text-sm text-muted-foreground">
     <p>Displays a button or a component that looks like a button.</p>
     <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> default, secondary, outline, ghost, link, soft, shine, link-hover, gradient, neobrutalism.</li>
+      <li><strong>Variants:</strong> default, secondary, destructive, outline, ghost, link, soft, shine, neobrutalism.</li>
       <li><strong>Sizes:</strong> default, sm, lg, icon.</li>
       <li><strong>Shapes:</strong> default, pill, square.</li>
+      <li><strong>Props:</strong> isLoading, asChild.</li>
     </ul>
-  </div>
-);
-
-const INPUT_CODE = `
-<Input placeholder="Default input" />
-<Input variant="filled" placeholder="Filled input" />
-<Input variant="flushed" placeholder="Flushed input" />
-<Input variant="material" placeholder="Material input" />
-<Input variant="neobrutalism" placeholder="Neobrutalism" />
-<Input disabled placeholder="Disabled" />
-<MaskedInput mask="(999) 999-9999" placeholder="Phone Mask" />
-`.trim();
-
-const INPUT_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>Displays a form input field or a component that looks like an input field.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> default, filled, flushed, material, neobrutalism.</li>
-      <li><strong>MaskedInput:</strong> Built-in pattern enforcement for phones, dates, etc.</li>
-    </ul>
-  </div>
-);
-
-const TEXTAREA_CODE = `
-<Textarea placeholder="Type your message here." />
-<Textarea variant="filled" placeholder="Filled textarea" />
-<Textarea variant="neobrutalism" placeholder="Neobrutalism" />
-`.trim();
-
-const TEXTAREA_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>Displays a form textarea field.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> default, filled, flushed, neobrutalism.</li>
-    </ul>
-  </div>
-);
-
-const CHECKBOX_CODE = `
-<div className="flex items-center space-x-2">
-  <Checkbox id="terms" />
-  <Label htmlFor="terms">Accept terms</Label>
-</div>
-
-<Checkbox variant="circle" />
-<Checkbox variant="neobrutalism" checked />
-`.trim();
-
-const CHECKBOX_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>A control that allows the user to toggle between checked and not checked.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> default, circle, neobrutalism.</li>
-    </ul>
-  </div>
-);
-
-const RADIO_CODE = `
-<RadioGroup defaultValue="comfortable">
-  <div className="flex items-center space-x-2">
-    <RadioGroupItem value="default" id="r1" />
-    <Label htmlFor="r1">Default</Label>
-  </div>
-  <div className="flex items-center space-x-2">
-    <RadioGroupItem value="comfortable" id="r2" />
-    <Label htmlFor="r2">Comfortable</Label>
-  </div>
-</RadioGroup>
-
-<RadioGroup variant="neobrutalism" defaultValue="a">
-  <RadioGroupItem value="a" />
-</RadioGroup>
-`.trim();
-
-const RADIO_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> default, neobrutalism.</li>
-    </ul>
-  </div>
-);
-
-const SWITCH_CODE = `
-<Switch />
-<Switch defaultChecked />
-<Switch variant="neobrutalism" />
-<Switch size="sm" />
-<Switch disabled />
-`.trim();
-
-const SWITCH_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>A control that allows the user to toggle between checked and not checked.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> default, neobrutalism.</li>
-      <li><strong>Sizes:</strong> default, sm.</li>
-    </ul>
-  </div>
-);
-
-const SLIDER_CODE = `
-<Slider defaultValue={[50]} max={100} step={1} />
-<Slider defaultValue={[25, 75]} max={100} step={1} />
-<Slider variant="thick" defaultValue={[50]} />
-<Slider variant="neobrutalism" defaultValue={[60]} />
-`.trim();
-
-const SLIDER_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>An input where the user selects a value from within a given range.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> default, thick, neobrutalism.</li>
-      <li><strong>Features:</strong> Multi-thumb (range) support.</li>
-    </ul>
-  </div>
-);
-
-const TOGGLE_CODE = `
-<Toggle aria-label="Toggle italic">
-  <Bold className="h-4 w-4" />
-</Toggle>
-<Toggle variant="outline" aria-label="Toggle italic">
-  <Italic className="h-4 w-4" />
-</Toggle>
-<Toggle variant="neobrutalism" aria-label="Toggle italic">
-  <Underline className="h-4 w-4" />
-</Toggle>
-`.trim();
-
-const TOGGLE_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>A two-state button that can be either on or off.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> default, outline, neobrutalism.</li>
-    </ul>
-  </div>
-);
-
-const SELECT_CODE = `
-<Select>
-  <SelectTrigger className="w-[180px]">
-    <SelectValue placeholder="Select a fruit" />
-  </SelectTrigger>
-  <SelectContent>
-    <SelectGroup>
-      <SelectLabel>Fruits</SelectLabel>
-      <SelectItem value="apple">Apple</SelectItem>
-      <SelectItem value="banana">Banana</SelectItem>
-    </SelectGroup>
-  </SelectContent>
-</Select>
-`.trim();
-
-const SELECT_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>Displays a list of options for the user to pick from—triggered by a button.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> Default, Neobrutalism.</li>
-    </ul>
-  </div>
-);
-
-const DIALOG_CODE = `
-<Dialog>
-  <DialogTrigger asChild>
-    <Button variant="outline">Open Dialog</Button>
-  </DialogTrigger>
-  <DialogContent variant="neobrutalism">
-    <DialogHeader>
-      <DialogTitle>Edit profile</DialogTitle>
-      <DialogDescription>Make changes to your profile here.</DialogDescription>
-    </DialogHeader>
-    {/* Content */}
-    <DialogFooter>
-      <Button type="submit">Save changes</Button>
-    </DialogFooter>
-  </DialogContent>
-</Dialog>
-`.trim();
-
-const DIALOG_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>A window overlaid on either the primary window or another dialog window.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> Default, Neobrutalism.</li>
-    </ul>
-  </div>
-);
-
-const SHEET_CODE = `
-<Sheet>
-  <SheetTrigger asChild>
-    <Button variant="outline">Open Sheet</Button>
-  </SheetTrigger>
-  <SheetContent side="right">
-    <SheetHeader>
-      <SheetTitle>Edit profile</SheetTitle>
-    </SheetHeader>
-    {/* Content */}
-  </SheetContent>
-</Sheet>
-`.trim();
-
-const SHEET_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>Extends the Dialog component to display content that complements the main screen.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Sides:</strong> top, bottom, left, right.</li>
-      <li><strong>Variants:</strong> Default, Neobrutalism.</li>
-    </ul>
-  </div>
-);
-
-const POPOVER_CODE = `
-<Popover>
-  <PopoverTrigger asChild>
-    <Button variant="outline">Open Popover</Button>
-  </PopoverTrigger>
-  <PopoverContent>
-    Place content for the popover here.
-  </PopoverContent>
-</Popover>
-`.trim();
-
-const POPOVER_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>Displays rich content in a portal, triggered by a button.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> Default, Neobrutalism.</li>
-    </ul>
-  </div>
-);
-
-const TOOLTIP_CODE = `
-<TooltipProvider>
-  <Tooltip>
-    <TooltipTrigger asChild>
-      <Button variant="outline" size="icon"><Plus /></Button>
-    </TooltipTrigger>
-    <TooltipContent side="top" variant="neobrutalism">
-      <p>Add to library</p>
-    </TooltipContent>
-  </Tooltip>
-</TooltipProvider>
-`.trim();
-
-const TOOLTIP_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> Default, Neobrutalism.</li>
-    </ul>
-  </div>
-);
-
-const CARD_CODE = `
-<Card>
-  <CardHeader>
-    <CardTitle>Title</CardTitle>
-    <CardDescription>Description</CardDescription>
-  </CardHeader>
-  <CardContent>Content</CardContent>
-</Card>
-
-<Card variant="neobrutalism">...</Card>
-<Card variant="ghost">...</Card>
-<Card variant="interactive">...</Card>
-<Card variant="brutal">...</Card>
-`.trim();
-
-const CARD_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>Displays a card with header, content, and footer.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> default, ghost, interactive, neobrutalism, brutal.</li>
-    </ul>
-  </div>
-);
-
-const TABS_CODE = `
-<Tabs defaultValue="account" className="w-[400px]">
-  <TabsList>
-    <TabsTrigger value="account">Account</TabsTrigger>
-    <TabsTrigger value="password">Password</TabsTrigger>
-  </TabsList>
-  <TabsContent value="account">...</TabsContent>
-  <TabsContent value="password">...</TabsContent>
-</Tabs>
-
-{/* Variants: default, underline, pills, enclosed, neobrutalism */}
-<Tabs variant="pills">...</Tabs>
-`.trim();
-
-const TABS_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>A set of layered sections of content—known as tab panels—that are displayed one at a time.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> default, underline, pills, enclosed, neobrutalism.</li>
-    </ul>
-  </div>
-);
-
-const ACCORDION_CODE = `
-<Accordion type="single" collapsible className="w-full">
-  <AccordionItem value="item-1">
-    <AccordionTrigger>Is it accessible?</AccordionTrigger>
-    <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
-  </AccordionItem>
-</Accordion>
-
-<Accordion variant="boxed">...</Accordion>
-<Accordion variant="neobrutalism">...</Accordion>
-`.trim();
-
-const ACCORDION_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>A vertically stacked set of interactive headings that each reveal a section of content.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> default, boxed, neobrutalism.</li>
-    </ul>
-  </div>
-);
-
-const BREADCRUMB_CODE = `
-<Breadcrumb>
-  <BreadcrumbList>
-    <BreadcrumbItem>
-      <BreadcrumbLink href="/">Home</BreadcrumbLink>
-    </BreadcrumbItem>
-    <BreadcrumbSeparator />
-    <BreadcrumbItem>
-      <BreadcrumbPage>Components</BreadcrumbPage>
-    </BreadcrumbItem>
-  </BreadcrumbList>
-</Breadcrumb>
-`.trim();
-
-const BREADCRUMB_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>Displays the path to the current resource using a hierarchy of links.</p>
   </div>
 );
 
 const ALERT_CODE = `
-<Alert variant="default">...</Alert>
-<Alert variant="destructive">...</Alert>
-<Alert variant="success">...</Alert>
-<Alert variant="warning">...</Alert>
-<Alert variant="info">...</Alert>
-<Alert variant="left-accent">...</Alert>
-<Alert variant="neobrutalism">...</Alert>
+<Alert>
+  <Terminal className="h-4 w-4" />
+  <AlertTitle>Heads up!</AlertTitle>
+  <AlertDescription>You can add components to your app using the cli.</AlertDescription>
+</Alert>
+
+<Alert variant="destructive">
+  <AlertTitle>Error</AlertTitle>
+  <AlertDescription>Your session has expired. Please log in again.</AlertDescription>
+</Alert>
 `.trim();
 
 const ALERT_DETAILS = (
@@ -515,22 +186,447 @@ const ALERT_DETAILS = (
 const BADGE_CODE = `
 <Badge>Default</Badge>
 <Badge variant="secondary">Secondary</Badge>
-<Badge variant="destructive">Destructive</Badge>
 <Badge variant="outline">Outline</Badge>
+<Badge variant="destructive">Destructive</Badge>
 <Badge variant="success">Success</Badge>
-<Badge variant="warning">Warning</Badge>
-<Badge variant="neutral">Neutral</Badge>
-<Badge variant="neobrutalism">Neo</Badge>
-<Badge variant="soft-success">Soft</Badge>
 `.trim();
 
 const BADGE_DETAILS = (
   <div className="space-y-4 text-sm text-muted-foreground">
     <p>Displays a badge or a component that looks like a badge.</p>
     <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> default, secondary, destructive, outline, neutral, success, warning, info, soft variants, neobrutalism.</li>
+      <li><strong>Variants:</strong> default, secondary, outline, destructive, success, warning, info, neutral, soft-*.</li>
     </ul>
   </div>
+);
+
+const CARD_CODE = `
+<Card>
+  <CardHeader>
+    <CardTitle>Card Title</CardTitle>
+    <CardDescription>Card Description</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Card Content</p>
+  </CardContent>
+  <CardFooter>
+    <p>Card Footer</p>
+  </CardFooter>
+</Card>
+`.trim();
+
+const CARD_DETAILS = (
+  <div className="space-y-4 text-sm text-muted-foreground">
+    <p>Displays a card with header, content, and footer.</p>
+    <ul className="list-disc pl-4 space-y-1">
+      <li><strong>Variants:</strong> default, ghost, interactive, neobrutalism, brutal.</li>
+    </ul>
+  </div>
+);
+
+const INPUT_CODE = `
+<Input type="email" placeholder="Email" />
+<Input disabled type="email" placeholder="Email" />
+<Input variant="filled" placeholder="Filled" />
+<Input variant="flushed" placeholder="Flushed" />
+<Input variant="material" placeholder="Material" />
+`.trim();
+
+const INPUT_DETAILS = (
+  <div className="space-y-4 text-sm text-muted-foreground">
+    <p>Displays a form input field or a component that looks like an input field.</p>
+    <ul className="list-disc pl-4 space-y-1">
+        <li><strong>Variants:</strong> default, filled, flushed, material, neobrutalism.</li>
+    </ul>
+  </div>
+);
+
+const SELECT_CODE = `
+<Select>
+  <SelectTrigger className="w-[180px]">
+    <SelectValue placeholder="Select a fruit" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      <SelectLabel>Fruits</SelectLabel>
+      <SelectItem value="apple">Apple</SelectItem>
+      <SelectItem value="banana">Banana</SelectItem>
+      <SelectItem value="blueberry">Blueberry</SelectItem>
+    </SelectGroup>
+  </SelectContent>
+</Select>
+`.trim();
+
+const SELECT_DETAILS = (
+  <div className="space-y-4 text-sm text-muted-foreground">
+    <p>Displays a list of options for the user to pick from—triggered by a button.</p>
+    <ul className="list-disc pl-4 space-y-1">
+        <li>Fully accessible with keyboard navigation.</li>
+        <li><strong>Variants:</strong> default, neobrutalism.</li>
+    </ul>
+  </div>
+);
+
+const CHECKBOX_CODE = `
+<div className="items-top flex space-x-2">
+  <Checkbox id="terms1" />
+  <div className="grid gap-1.5 leading-none">
+    <label
+      htmlFor="terms1"
+      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+    >
+      Accept terms and conditions
+    </label>
+    <p className="text-sm text-muted-foreground">
+      You agree to our Terms of Service and Privacy Policy.
+    </p>
+  </div>
+</div>
+`.trim();
+
+const CHECKBOX_DETAILS = (
+  <div className="space-y-4 text-sm text-muted-foreground">
+    <p>A control that allows the user to toggle between checked and not checked.</p>
+    <ul className="list-disc pl-4 space-y-1">
+        <li><strong>Variants:</strong> default, circle, neobrutalism.</li>
+    </ul>
+  </div>
+);
+
+const SWITCH_CODE = `
+<div className="flex items-center space-x-2">
+  <Switch id="airplane-mode" />
+  <Label htmlFor="airplane-mode">Airplane Mode</Label>
+</div>
+`.trim();
+
+const SWITCH_DETAILS = (
+  <div className="space-y-4 text-sm text-muted-foreground">
+    <p>A control that allows the user to toggle between checked and not checked.</p>
+    <ul className="list-disc pl-4 space-y-1">
+        <li><strong>Variants:</strong> default, neobrutalism.</li>
+        <li><strong>Sizes:</strong> default, sm.</li>
+    </ul>
+  </div>
+);
+
+const SLIDER_CODE = `
+<Slider defaultValue={[50]} max={100} step={1} className="w-[60%]" />
+`.trim();
+
+const SLIDER_DETAILS = (
+  <div className="space-y-4 text-sm text-muted-foreground">
+    <p>An input where the user selects a value from within a given range.</p>
+    <ul className="list-disc pl-4 space-y-1">
+        <li>Supports single or multiple thumbs.</li>
+        <li><strong>Variants:</strong> default, thick, neobrutalism.</li>
+    </ul>
+  </div>
+);
+
+const DIALOG_CODE = `
+<Dialog>
+  <DialogTrigger>Open</DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Are you sure?</DialogTitle>
+      <DialogDescription>
+        This action cannot be undone.
+      </DialogDescription>
+    </DialogHeader>
+    <DialogFooter>
+      <Button type="submit">Confirm</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+`.trim();
+
+const DIALOG_DETAILS = (
+  <div className="space-y-4 text-sm text-muted-foreground">
+    <p>A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.</p>
+    <ul className="list-disc pl-4 space-y-1">
+        <li>Manages focus trap and body scroll locking.</li>
+        <li><strong>Variants:</strong> default, neobrutalism.</li>
+    </ul>
+  </div>
+);
+
+const SHEET_CODE = `
+<Sheet>
+  <SheetTrigger>Open</SheetTrigger>
+  <SheetContent side="right">
+    <SheetHeader>
+      <SheetTitle>Edit profile</SheetTitle>
+      <SheetDescription>
+        Make changes to your profile here. Click save when you're done.
+      </SheetDescription>
+    </SheetHeader>
+    {/* Content */}
+    <SheetFooter>
+      <Button type="submit">Save changes</Button>
+    </SheetFooter>
+  </SheetContent>
+</Sheet>
+`.trim();
+
+const SHEET_DETAILS = (
+  <div className="space-y-4 text-sm text-muted-foreground">
+    <p>Extends the Dialog component to display content that complements the main screen.</p>
+    <ul className="list-disc pl-4 space-y-1">
+        <li><strong>Sides:</strong> top, right, bottom, left.</li>
+        <li><strong>Variants:</strong> default, neobrutalism.</li>
+    </ul>
+  </div>
+);
+
+const ACCORDION_CODE = `
+<Accordion type="single" collapsible>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Is it accessible?</AccordionTrigger>
+    <AccordionContent>
+      Yes. It adheres to the WAI-ARIA design pattern.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+`.trim();
+
+const ACCORDION_DETAILS = (
+  <div className="space-y-4 text-sm text-muted-foreground">
+    <p>A vertically stacked set of interactive headings that each reveal a section of content.</p>
+    <ul className="list-disc pl-4 space-y-1">
+        <li><strong>Variants:</strong> default, boxed, neobrutalism.</li>
+    </ul>
+  </div>
+);
+
+const TABS_CODE = `
+<Tabs defaultValue="account" className="w-[400px]">
+  <TabsList>
+    <TabsTrigger value="account">Account</TabsTrigger>
+    <TabsTrigger value="password">Password</TabsTrigger>
+  </TabsList>
+  <TabsContent value="account">Make changes to your account here.</TabsContent>
+  <TabsContent value="password">Change your password here.</TabsContent>
+</Tabs>
+`.trim();
+
+const TABS_DETAILS = (
+  <div className="space-y-4 text-sm text-muted-foreground">
+    <p>A set of layered sections of content—known as tab panels—that are displayed one at a time.</p>
+    <ul className="list-disc pl-4 space-y-1">
+        <li><strong>Variants:</strong> default, underline, pills, enclosed, neobrutalism.</li>
+    </ul>
+  </div>
+);
+
+const TOOLTIP_CODE = `
+<Tooltip>
+  <TooltipTrigger asChild>
+    <Button variant="outline">Hover</Button>
+  </TooltipTrigger>
+  <TooltipContent>
+    <p>Add to library</p>
+  </TooltipContent>
+</Tooltip>
+`.trim();
+
+const TOOLTIP_DETAILS = (
+  <div className="space-y-4 text-sm text-muted-foreground">
+    <p>A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.</p>
+</div>
+);
+
+const TOAST_CODE = `
+const { toast } = useToast()
+
+<Button onClick={() => toast({
+  title: "Success",
+  description: "Your changes have been saved."
+})}>
+  Show Toast
+</Button>
+`.trim();
+
+const TOAST_DETAILS = (
+    <div className="space-y-4 text-sm text-muted-foreground">
+        <p>A succinct message that is displayed temporarily.</p>
+        <ul className="list-disc pl-4 space-y-1">
+            <li><strong>Hook:</strong> useToast() for triggering.</li>
+            <li><strong>Variants:</strong> default, destructive, success, neobrutalism.</li>
+        </ul>
+    </div>
+);
+
+const OTP_CODE = `
+<InputOTP maxLength={6}>
+  <InputOTPGroup>
+    <InputOTPSlot index={0} />
+    <InputOTPSlot index={1} />
+    <InputOTPSlot index={2} />
+  </InputOTPGroup>
+  <InputOTPSeparator />
+  <InputOTPGroup>
+    <InputOTPSlot index={3} />
+    <InputOTPSlot index={4} />
+    <InputOTPSlot index={5} />
+  </InputOTPGroup>
+</InputOTP>
+`.trim();
+
+const OTP_DETAILS = (
+    <div className="space-y-4 text-sm text-muted-foreground">
+        <p>Accessible one-time password input component.</p>
+    </div>
+);
+
+const TABLE_CODE = `
+<Table>
+  <TableCaption>A list of your recent invoices.</TableCaption>
+  <TableHeader>
+    <TableRow>
+      <TableHead className="w-[100px]">Invoice</TableHead>
+      <TableHead>Status</TableHead>
+      <TableHead className="text-right">Amount</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">INV-001</TableCell>
+      <TableCell>Paid</TableCell>
+      <TableCell className="text-right">$250.00</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+`.trim();
+
+const TABLE_DETAILS = (
+    <div className="space-y-4 text-sm text-muted-foreground">
+        <p>A responsive table component.</p>
+        <ul className="list-disc pl-4 space-y-1">
+            <li><strong>Variants:</strong> default, neobrutalism (grid lines).</li>
+        </ul>
+    </div>
+);
+
+const SKELETON_CODE = `
+<div className="flex items-center space-x-4">
+  <Skeleton className="h-12 w-12 rounded-full" />
+  <div className="space-y-2">
+    <Skeleton className="h-4 w-[250px]" />
+    <Skeleton className="h-4 w-[200px]" />
+  </div>
+</div>
+`.trim();
+
+const SKELETON_DETAILS = (
+    <div className="space-y-4 text-sm text-muted-foreground">
+        <p>Use to show a placeholder while content is loading.</p>
+    </div>
+);
+
+const SEPARATOR_CODE = `
+<div>
+  <div className="space-y-1">
+    <h4 className="text-sm font-medium leading-none">Radix Primitives</h4>
+    <p className="text-sm text-muted-foreground">
+      An open-source UI component library.
+    </p>
+  </div>
+  <Separator className="my-4" />
+  <div className="flex h-5 items-center space-x-4 text-sm">
+    <div>Blog</div>
+    <Separator orientation="vertical" />
+    <div>Docs</div>
+    <Separator orientation="vertical" />
+    <div>Source</div>
+  </div>
+</div>
+`.trim();
+
+const SEPARATOR_DETAILS = (
+    <div className="space-y-4 text-sm text-muted-foreground">
+        <p>Visually or semantically separates content.</p>
+        <ul className="list-disc pl-4 space-y-1">
+            <li><strong>Variants:</strong> default, dashed, dotted.</li>
+        </ul>
+    </div>
+);
+
+const BREADCRUMB_CODE = `
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/components">Components</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+    </BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
+`.trim();
+
+const BREADCRUMB_DETAILS = (
+    <div className="space-y-4 text-sm text-muted-foreground">
+        <p>Displays the path to the current resource using a hierarchy of links.</p>
+    </div>
+);
+
+const PROGRESS_CODE = `
+<Progress value={33} />
+`.trim();
+
+const PROGRESS_DETAILS = (
+    <div className="space-y-4 text-sm text-muted-foreground">
+        <p>Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.</p>
+        <ul className="list-disc pl-4 space-y-1">
+            <li><strong>Variants:</strong> default, neobrutalism.</li>
+        </ul>
+    </div>
+);
+
+const POPOVER_CODE = `
+<Popover>
+  <PopoverTrigger asChild>
+    <Button variant="outline">Open Popover</Button>
+  </PopoverTrigger>
+  <PopoverContent className="w-80">
+    <div className="grid gap-4">
+      <div className="space-y-2">
+        <h4 className="font-medium leading-none">Dimensions</h4>
+        <p className="text-sm text-muted-foreground">Set the dimensions for the layer.</p>
+      </div>
+    </div>
+  </PopoverContent>
+</Popover>
+`.trim();
+
+const POPOVER_DETAILS = (
+    <div className="space-y-4 text-sm text-muted-foreground">
+        <p>Displays rich content in a portal, triggered by a button.</p>
+        <ul className="list-disc pl-4 space-y-1">
+            <li><strong>Variants:</strong> default, neobrutalism.</li>
+        </ul>
+    </div>
+);
+
+const TOGGLE_CODE = `
+<Toggle aria-label="Toggle italic">
+  <Italic className="h-4 w-4" />
+</Toggle>
+`.trim();
+
+const TOGGLE_DETAILS = (
+    <div className="space-y-4 text-sm text-muted-foreground">
+        <p>A two-state button that can be either on or off.</p>
+        <ul className="list-disc pl-4 space-y-1">
+            <li><strong>Variants:</strong> default, outline, neobrutalism.</li>
+        </ul>
+    </div>
 );
 
 const AVATAR_CODE = `
@@ -538,59 +634,50 @@ const AVATAR_CODE = `
   <AvatarImage src="https://github.com/shadcn.png" />
   <AvatarFallback>CN</AvatarFallback>
 </Avatar>
-
-<Avatar shape="square">...</Avatar>
-
-<AvatarGroup>
-  <Avatar>...</Avatar>
-  <Avatar>...</Avatar>
-</AvatarGroup>
 `.trim();
 
 const AVATAR_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>An image element with a fallback for representing the user.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Shapes:</strong> circle, square.</li>
-    </ul>
-  </div>
+    <div className="space-y-4 text-sm text-muted-foreground">
+        <p>An image element with a fallback for representing the user.</p>
+        <ul className="list-disc pl-4 space-y-1">
+            <li><strong>Shapes:</strong> circle, square.</li>
+        </ul>
+    </div>
 );
 
-const PROGRESS_CODE = `
-<Progress value={33} />
-<Progress value={66} variant="neobrutalism" />
+const RADIOGROUP_CODE = `
+<RadioGroup defaultValue="option-one">
+  <div className="flex items-center space-x-2">
+    <RadioGroupItem value="option-one" id="option-one" />
+    <Label htmlFor="option-one">Option One</Label>
+  </div>
+  <div className="flex items-center space-x-2">
+    <RadioGroupItem value="option-two" id="option-two" />
+    <Label htmlFor="option-two">Option Two</Label>
+  </div>
+</RadioGroup>
 `.trim();
 
-const PROGRESS_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>Displays an indicator showing the completion progress of a task.</p>
-  </div>
+const RADIOGROUP_DETAILS = (
+    <div className="space-y-4 text-sm text-muted-foreground">
+        <p>A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.</p>
+        <ul className="list-disc pl-4 space-y-1">
+            <li><strong>Variants:</strong> default, neobrutalism.</li>
+        </ul>
+    </div>
 );
 
-const SKELETON_CODE = `
-<Skeleton className="h-4 w-[250px]" />
-<Skeleton variant="circle" className="h-12 w-12" />
+const TEXTAREA_CODE = `
+<Textarea placeholder="Type your message here." />
 `.trim();
 
-const SKELETON_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>Use to show a placeholder while content is loading.</p>
-  </div>
-);
-
-const SEPARATOR_CODE = `
-<Separator />
-<Separator variant="dashed" />
-<Separator variant="dotted" />
-`.trim();
-
-const SEPARATOR_DETAILS = (
-  <div className="space-y-4 text-sm text-muted-foreground">
-    <p>Visually or semantically separates content.</p>
-    <ul className="list-disc pl-4 space-y-1">
-      <li><strong>Variants:</strong> default, dashed, dotted.</li>
-    </ul>
-  </div>
+const TEXTAREA_DETAILS = (
+    <div className="space-y-4 text-sm text-muted-foreground">
+        <p>Displays a form textarea or a component that looks like a textarea.</p>
+        <ul className="list-disc pl-4 space-y-1">
+            <li><strong>Variants:</strong> default, filled, flushed, neobrutalism.</li>
+        </ul>
+    </div>
 );
 
 export default function App() {
@@ -606,6 +693,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans transition-colors duration-300">
+      <Toaster />
       
       {/* Navbar */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -633,223 +721,348 @@ export default function App() {
         
         {/* Hero */}
         <section className="text-center space-y-6 py-10">
-          <Badge variant="neutral" className="mb-4">v1.0.0 Now Available</Badge>
+          <Badge variant="neutral" className="mb-4">v1.1.0: Now with Toasts, Tables, OTP & More</Badge>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">
             Accessible UI Components <br className="hidden md:block"/> for <span className="text-primary">React & Tailwind</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
              A high-quality, copy-paste component library. Built with pure React hooks and standard DOM elements. Zero heavy dependencies.
           </p>
-          <div className="flex justify-center gap-4">
-            <Button size="lg" variant="default" className="gap-2">
-              Get Started <ArrowRight className="h-4 w-4" />
-            </Button>
-            <Button size="lg" variant="outline">Documentation</Button>
-          </div>
         </section>
 
         {/* Components Grid */}
-        <div className="grid grid-cols-1 gap-12">
+        <div className="grid grid-cols-1 gap-16">
           
           <ComponentShowcase title="Buttons" code={BUTTON_CODE} details={BUTTON_DETAILS}>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <Button variant="default">Default</Button>
               <Button variant="secondary">Secondary</Button>
+              <Button variant="destructive">Destructive</Button>
               <Button variant="outline">Outline</Button>
               <Button variant="ghost">Ghost</Button>
               <Button variant="link">Link</Button>
               <Button variant="soft">Soft</Button>
               <Button variant="shine">Shine</Button>
-              <Button variant="link-hover">Link Hover</Button>
               <Button variant="neobrutalism">Neobrutalism</Button>
-              <div className="w-full"></div>
-              <Button shape="pill">Pill</Button>
-              <Button shape="square">Square</Button>
-              <Button size="sm">Small</Button>
-              <Button size="lg">Large</Button>
               <Button size="icon"><Plus className="h-4 w-4" /></Button>
-              <div className="w-full"></div>
+              <Button shape="pill">Pill Shape</Button>
               <Button isLoading>Loading</Button>
-              <Button disabled>Disabled</Button>
             </div>
           </ComponentShowcase>
 
-          <ComponentShowcase title="Input" code={INPUT_CODE} details={INPUT_DETAILS}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl">
-               <Input placeholder="Default input" />
-               <Input variant="filled" placeholder="Filled input" />
-               <Input variant="flushed" placeholder="Flushed input" />
-               <Input variant="material" placeholder="Material input" />
-               <Input variant="neobrutalism" placeholder="Neobrutalism" />
-               <Input disabled placeholder="Disabled input" />
-               <MaskedInput mask="(999) 999-9999" placeholder="Phone (555) 555-5555" />
+          <ComponentShowcase title="Alerts" code={ALERT_CODE} details={ALERT_DETAILS}>
+            <div className="flex flex-col gap-4 w-full max-w-2xl">
+              <Alert>
+                <Info className="h-4 w-4" />
+                <AlertTitle>Heads up!</AlertTitle>
+                <AlertDescription>You can add components to your app using the cli.</AlertDescription>
+              </Alert>
+              <Alert variant="destructive">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>Your session has expired. Please log in again.</AlertDescription>
+              </Alert>
+              <Alert variant="success">
+                <Check className="h-4 w-4" />
+                <AlertTitle>Success</AlertTitle>
+                <AlertDescription>Your changes have been saved successfully.</AlertDescription>
+              </Alert>
+              <Alert variant="left-accent">
+                <AlertTitle>Note</AlertTitle>
+                <AlertDescription>This is a left-accented alert.</AlertDescription>
+              </Alert>
             </div>
           </ComponentShowcase>
 
-          <ComponentShowcase title="Textarea" code={TEXTAREA_CODE} details={TEXTAREA_DETAILS}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl">
-               <Textarea placeholder="Default textarea" />
-               <Textarea variant="filled" placeholder="Filled textarea" />
-               <Textarea variant="neobrutalism" placeholder="Neobrutalism" />
+          <ComponentShowcase title="Badges" code={BADGE_CODE} details={BADGE_DETAILS}>
+            <div className="flex flex-wrap gap-4">
+              <Badge>Default</Badge>
+              <Badge variant="secondary">Secondary</Badge>
+              <Badge variant="outline">Outline</Badge>
+              <Badge variant="destructive">Destructive</Badge>
+              <Badge variant="success">Success</Badge>
+              <Badge variant="soft-warning">Soft Warning</Badge>
+              <Badge variant="soft-info">Soft Info</Badge>
+              <Badge variant="neobrutalism">Neobrutalism</Badge>
+            </div>
+          </ComponentShowcase>
+
+          <ComponentShowcase title="Cards" code={CARD_CODE} details={CARD_DETAILS}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Default Card</CardTitle>
+                  <CardDescription>Clean and simple.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">Card content goes here.</p>
+                </CardContent>
+                <CardFooter>
+                  <Button className="w-full">Action</Button>
+                </CardFooter>
+              </Card>
+              
+              <Card variant="neobrutalism">
+                <CardHeader>
+                  <CardTitle>Neobrutalism</CardTitle>
+                  <CardDescription>Bold shadows and borders.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm">High contrast design.</p>
+                </CardContent>
+                <CardFooter>
+                  <Button variant="neobrutalism" className="w-full">Action</Button>
+                </CardFooter>
+              </Card>
+            </div>
+          </ComponentShowcase>
+
+          <ComponentShowcase title="Input & Textarea" code={INPUT_CODE} details={INPUT_DETAILS}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-2xl">
+                <div className="space-y-4">
+                    <Label>Default Input</Label>
+                    <Input placeholder="Email address" />
+                </div>
+                <div className="space-y-4">
+                    <Label>Filled Input</Label>
+                    <Input variant="filled" placeholder="Email address" />
+                </div>
+                <div className="space-y-4">
+                    <Label>Material Input</Label>
+                    <Input variant="material" placeholder="Email address" />
+                </div>
+                <div className="space-y-4">
+                    <Label>Neobrutalism Input</Label>
+                    <Input variant="neobrutalism" placeholder="Email address" />
+                </div>
+                <div className="space-y-4 md:col-span-2">
+                    <Label>Masked Input (Phone)</Label>
+                    <MaskedInput mask="(999) 999-9999" placeholder="(555) 555-5555" />
+                </div>
+                <div className="space-y-4 md:col-span-2">
+                    <Label>Textarea</Label>
+                    <Textarea placeholder="Type your message here." />
+                </div>
             </div>
           </ComponentShowcase>
 
           <ComponentShowcase title="Select" code={SELECT_CODE} details={SELECT_DETAILS}>
-            <div className="flex flex-wrap gap-4 w-full max-w-2xl">
-              <Select>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Default Select" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Fruits</SelectLabel>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="orange">Orange</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              <Select>
-                <SelectTrigger className="w-[180px]" variant="neobrutalism">
-                  <SelectValue placeholder="Neobrutalism" />
-                </SelectTrigger>
-                <SelectContent variant="neobrutalism">
-                  <SelectGroup>
-                    <SelectLabel>Tech</SelectLabel>
-                    <SelectItem value="react">React</SelectItem>
-                    <SelectItem value="vue">Vue</SelectItem>
-                    <SelectItem value="angular">Angular</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-               <Select disabled>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Disabled" />
-                </SelectTrigger>
-              </Select>
+            <div className="flex flex-wrap gap-8 w-full max-w-xl">
+               <div className="flex-1 space-y-2">
+                   <Label>Default</Label>
+                   <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a timezone" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>North America</SelectLabel>
+                          <SelectItem value="est">Eastern Standard Time (EST)</SelectItem>
+                          <SelectItem value="cst">Central Standard Time (CST)</SelectItem>
+                          <SelectItem value="mst">Mountain Standard Time (MST)</SelectItem>
+                          <SelectItem value="pst">Pacific Standard Time (PST)</SelectItem>
+                          <SelectItem value="akst">Alaska Standard Time (AKST)</SelectItem>
+                          <SelectItem value="hst">Hawaii Standard Time (HST)</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+               </div>
+               <div className="flex-1 space-y-2">
+                   <Label>Neobrutalism</Label>
+                   <Select>
+                      <SelectTrigger variant="neobrutalism">
+                        <SelectValue placeholder="Select a timezone" />
+                      </SelectTrigger>
+                      <SelectContent variant="neobrutalism">
+                        <SelectGroup>
+                          <SelectLabel>North America</SelectLabel>
+                          <SelectItem value="est">Eastern Standard Time (EST)</SelectItem>
+                          <SelectItem value="cst">Central Standard Time (CST)</SelectItem>
+                          <SelectItem value="mst">Mountain Standard Time (MST)</SelectItem>
+                          <SelectItem value="pst">Pacific Standard Time (PST)</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+               </div>
             </div>
           </ComponentShowcase>
 
-          <ComponentShowcase title="Checkbox" code={CHECKBOX_CODE} details={CHECKBOX_DETAILS}>
-             <div className="flex flex-wrap gap-8">
+          <ComponentShowcase title="Switch & Toggle" code={SWITCH_CODE} details={SWITCH_DETAILS}>
+             <div className="flex flex-wrap items-center justify-center gap-12">
                 <div className="flex items-center space-x-2">
-                   <Checkbox id="c1" />
-                   <Label htmlFor="c1">Default</Label>
+                    <Switch id="airplane-mode" />
+                    <Label htmlFor="airplane-mode">Airplane Mode</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                   <Checkbox id="c2" variant="circle" defaultChecked />
-                   <Label htmlFor="c2">Circle</Label>
+                    <Switch variant="neobrutalism" id="neo-mode" />
+                    <Label htmlFor="neo-mode">Neobrutalism</Label>
                 </div>
-                <div className="flex items-center space-x-2">
-                   <Checkbox id="c3" variant="neobrutalism" />
-                   <Label htmlFor="c3">Neobrutalism</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                   <Checkbox id="c4" disabled defaultChecked />
-                   <Label htmlFor="c4">Disabled</Label>
+                <div className="flex items-center gap-4">
+                    <Toggle aria-label="Toggle italic">
+                      <Bold className="h-4 w-4" />
+                    </Toggle>
+                    <Toggle variant="outline" aria-label="Toggle italic">
+                      <Italic className="h-4 w-4" />
+                    </Toggle>
                 </div>
              </div>
           </ComponentShowcase>
 
-          <ComponentShowcase title="Radio Group" code={RADIO_CODE} details={RADIO_DETAILS}>
-            <div className="flex flex-wrap gap-12">
-               <RadioGroup defaultValue="1">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="1" id="r1" />
-                    <Label htmlFor="r1">Default 1</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="2" id="r2" />
-                    <Label htmlFor="r2">Default 2</Label>
-                  </div>
-               </RadioGroup>
-
-               <RadioGroup defaultValue="a" variant="neobrutalism">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="a" id="ra" />
-                    <Label htmlFor="ra">Option A</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="b" id="rb" />
-                    <Label htmlFor="rb">Option B</Label>
-                  </div>
-               </RadioGroup>
-            </div>
-          </ComponentShowcase>
-
-          <ComponentShowcase title="Switch" code={SWITCH_CODE} details={SWITCH_DETAILS}>
-             <div className="flex flex-wrap items-center gap-8">
-                <div className="flex items-center gap-2">
-                   <Switch id="s1" />
-                   <Label htmlFor="s1">Default</Label>
+          <ComponentShowcase title="Checkbox & Radio" code={CHECKBOX_CODE} details={CHECKBOX_DETAILS}>
+             <div className="flex flex-col md:flex-row gap-12 items-start">
+                <div className="space-y-4">
+                    <h4 className="font-medium">Checkboxes</h4>
+                    <div className="flex items-center space-x-2">
+                        <Checkbox id="terms" />
+                        <label htmlFor="terms" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                            Accept terms and conditions
+                        </label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        <Checkbox variant="circle" id="circle" />
+                        <label htmlFor="circle" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                            Circle Checkbox
+                        </label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        <Checkbox variant="neobrutalism" id="neo-check" />
+                        <label htmlFor="neo-check" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                            Neobrutalism
+                        </label>
+                    </div>
                 </div>
-                <div className="flex items-center gap-2">
-                   <Switch id="s2" defaultChecked />
-                   <Label htmlFor="s2">Checked</Label>
-                </div>
-                <div className="flex items-center gap-2">
-                   <Switch id="s3" variant="neobrutalism" defaultChecked />
-                   <Label htmlFor="s3">Neobrutalism</Label>
-                </div>
-                <div className="flex items-center gap-2">
-                   <Switch id="s4" size="sm" />
-                   <Label htmlFor="s4">Small</Label>
+                
+                <div className="space-y-4">
+                    <h4 className="font-medium">Radio Groups</h4>
+                    <RadioGroup defaultValue="option-one">
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="option-one" id="option-one" />
+                        <Label htmlFor="option-one">Option One</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="option-two" id="option-two" />
+                        <Label htmlFor="option-two">Option Two</Label>
+                      </div>
+                    </RadioGroup>
                 </div>
              </div>
           </ComponentShowcase>
 
           <ComponentShowcase title="Slider" code={SLIDER_CODE} details={SLIDER_DETAILS}>
-             <div className="flex flex-col gap-6 w-full max-w-md">
+             <div className="w-full max-w-md space-y-8">
                 <div className="space-y-2">
-                   <Label>Default</Label>
-                   <Slider defaultValue={[50]} max={100} step={1} />
+                    <Label>Default</Label>
+                    <Slider defaultValue={[50]} max={100} step={1} />
                 </div>
                 <div className="space-y-2">
-                   <Label>Range</Label>
-                   <Slider defaultValue={[20, 80]} max={100} step={1} />
+                    <Label>Range (Multi-thumb)</Label>
+                    <Slider defaultValue={[25, 75]} max={100} step={1} />
                 </div>
                 <div className="space-y-2">
-                   <Label>Thick</Label>
-                   <Slider defaultValue={[60]} max={100} step={1} variant="thick" />
-                </div>
-                <div className="space-y-2">
-                   <Label>Neobrutalism</Label>
-                   <Slider defaultValue={[40]} max={100} step={1} variant="neobrutalism" />
+                    <Label>Neobrutalism</Label>
+                    <Slider variant="neobrutalism" defaultValue={[60]} max={100} step={1} />
                 </div>
              </div>
           </ComponentShowcase>
 
-          <ComponentShowcase title="Toggle" code={TOGGLE_CODE} details={TOGGLE_DETAILS}>
+          <ComponentShowcase title="Tabs" code={TABS_CODE} details={TABS_DETAILS}>
+             <Tabs defaultValue="account" className="w-[400px]">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="account">Account</TabsTrigger>
+                <TabsTrigger value="password">Password</TabsTrigger>
+              </TabsList>
+              <TabsContent value="account">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Account</CardTitle>
+                    <CardDescription>
+                      Make changes to your account here. Click save when you're done.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <div className="space-y-1">
+                      <Label htmlFor="name">Name</Label>
+                      <Input id="name" defaultValue="Pedro Duarte" />
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button>Save changes</Button>
+                  </CardFooter>
+                </Card>
+              </TabsContent>
+              <TabsContent value="password">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Password</CardTitle>
+                    <CardDescription>
+                      Change your password here. After saving, you'll be logged out.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <div className="space-y-1">
+                      <Label htmlFor="current">Current password</Label>
+                      <Input id="current" type="password" />
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button>Save password</Button>
+                  </CardFooter>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </ComponentShowcase>
+
+          <ComponentShowcase title="Accordion" code={ACCORDION_CODE} details={ACCORDION_DETAILS}>
+             <Accordion type="single" collapsible className="w-full max-w-md">
+              <AccordionItem value="item-1">
+                <AccordionTrigger>Is it accessible?</AccordionTrigger>
+                <AccordionContent>
+                  Yes. It adheres to the WAI-ARIA design pattern.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-2">
+                <AccordionTrigger>Is it styled?</AccordionTrigger>
+                <AccordionContent>
+                  Yes. It comes with default styles that matches the other
+                  components&apos; aesthetic.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-3">
+                <AccordionTrigger>Is it animated?</AccordionTrigger>
+                <AccordionContent>
+                  Yes. It's animated by default, but you can disable it if you
+                  prefer.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </ComponentShowcase>
+
+          <ComponentShowcase title="Dialog & Sheet" code={DIALOG_CODE} details={DIALOG_DETAILS}>
              <div className="flex gap-4">
-                <Toggle aria-label="Toggle bold">
-                   <div className="font-bold">B</div>
-                </Toggle>
-                <Toggle variant="outline" aria-label="Toggle italic">
-                   <div className="italic">I</div>
-                </Toggle>
-                <Toggle variant="neobrutalism" aria-label="Toggle underline">
-                   <div className="underline">U</div>
-                </Toggle>
-                <Toggle size="sm" aria-label="Small">
-                   <div className="text-xs">S</div>
-                </Toggle>
-             </div>
-          </ComponentShowcase>
-
-          <ComponentShowcase title="Dialog" code={DIALOG_CODE} details={DIALOG_DETAILS}>
-              <div className="flex gap-4">
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button variant="outline">Default Dialog</Button>
+                    <Button variant="outline">Open Dialog</Button>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
                       <DialogTitle>Edit profile</DialogTitle>
-                      <DialogDescription>Make changes to your profile here.</DialogDescription>
+                      <DialogDescription>
+                        Make changes to your profile here. Click save when you're done.
+                      </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
-                      <Label htmlFor="name">Name</Label>
-                      <Input id="name" defaultValue="Pedro Duarte" />
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name" className="text-right">
+                          Name
+                        </Label>
+                        <Input id="name" value="Pedro Duarte" className="col-span-3" />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="username" className="text-right">
+                          Username
+                        </Label>
+                        <Input id="username" value="@peduarte" className="col-span-3" />
+                      </div>
                     </div>
                     <DialogFooter>
                       <Button type="submit">Save changes</Button>
@@ -857,325 +1070,261 @@ export default function App() {
                   </DialogContent>
                 </Dialog>
 
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant="neobrutalism">Neobrutalism</Button>
-                  </DialogTrigger>
-                  <DialogContent variant="neobrutalism" className="sm:max-w-[425px]">
-                    <DialogHeader>
-                      <DialogTitle>Neobrutalism</DialogTitle>
-                      <DialogDescription>Hard shadows and borders.</DialogDescription>
-                    </DialogHeader>
-                    <div className="py-4">
-                       <p>This dialog has a distinct style.</p>
-                    </div>
-                    <DialogFooter>
-                      <Button variant="neobrutalism">Okay</Button>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
-              </div>
-          </ComponentShowcase>
-
-          <ComponentShowcase title="Sheet" code={SHEET_CODE} details={SHEET_DETAILS}>
-             <div className="flex gap-4">
                 <Sheet>
                   <SheetTrigger asChild>
-                    <Button variant="outline">Right Sheet</Button>
+                    <Button variant="outline">Open Sheet</Button>
                   </SheetTrigger>
-                  <SheetContent side="right">
+                  <SheetContent>
                     <SheetHeader>
-                      <SheetTitle>Menu</SheetTitle>
+                      <SheetTitle>Edit profile</SheetTitle>
+                      <SheetDescription>
+                        Make changes to your profile here. Click save when you're done.
+                      </SheetDescription>
                     </SheetHeader>
-                    <div className="py-4">Content goes here</div>
-                  </SheetContent>
-                </Sheet>
-                <Sheet>
-                  <SheetTrigger asChild>
-                    <Button variant="outline">Left Sheet</Button>
-                  </SheetTrigger>
-                  <SheetContent side="left">
-                    <SheetHeader>
-                      <SheetTitle>Sidebar</SheetTitle>
-                    </SheetHeader>
-                    <div className="py-4">Content goes here</div>
-                  </SheetContent>
-                </Sheet>
-                 <Sheet>
-                  <SheetTrigger asChild>
-                    <Button variant="neobrutalism">Neobrutalism</Button>
-                  </SheetTrigger>
-                  <SheetContent side="right" variant="neobrutalism">
-                    <SheetHeader>
-                      <SheetTitle>Neobrutalism</SheetTitle>
-                    </SheetHeader>
-                    <div className="py-4">Content goes here</div>
-                  </SheetContent>
-                </Sheet>
-             </div>
-          </ComponentShowcase>
-
-          <ComponentShowcase title="Popover" code={POPOVER_CODE} details={POPOVER_DETAILS}>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline">Open Popover</Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-80">
-                  <div className="grid gap-4">
-                    <div className="space-y-2">
-                      <h4 className="font-medium leading-none">Dimensions</h4>
-                      <p className="text-sm text-muted-foreground">Set the dimensions for the layer.</p>
+                    <div className="grid gap-4 py-4">
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name" className="text-right">
+                          Name
+                        </Label>
+                        <Input id="name" value="Pedro Duarte" className="col-span-3" />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="username" className="text-right">
+                          Username
+                        </Label>
+                        <Input id="username" value="@peduarte" className="col-span-3" />
+                      </div>
                     </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="width">Width</Label>
-                      <Input id="width" defaultValue="100%" className="h-8" />
+                    <SheetFooter>
+                      <Button type="submit">Save changes</Button>
+                    </SheetFooter>
+                  </SheetContent>
+                </Sheet>
+             </div>
+          </ComponentShowcase>
+
+          <ComponentShowcase title="Popover & Tooltip" code={POPOVER_CODE} details={POPOVER_DETAILS}>
+             <div className="flex gap-8 items-center">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline">Open Popover</Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80">
+                    <div className="grid gap-4">
+                      <div className="space-y-2">
+                        <h4 className="font-medium leading-none">Dimensions</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Set the dimensions for the layer.
+                        </p>
+                      </div>
+                      <div className="grid gap-2">
+                        <div className="grid grid-cols-3 items-center gap-4">
+                          <Label htmlFor="width">Width</Label>
+                          <Input id="width" defaultValue="100%" className="col-span-2 h-8" />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </PopoverContent>
-              </Popover>
-          </ComponentShowcase>
+                  </PopoverContent>
+                </Popover>
 
-          <ComponentShowcase title="Tooltip" code={TOOLTIP_CODE} details={TOOLTIP_DETAILS}>
-            <div className="flex gap-4">
-               <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button variant="ghost" size="icon"><Info className="h-5 w-5" /></Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Default Tooltip</p>
-                    </TooltipContent>
-                  </Tooltip>
-               </TooltipProvider>
-
-               <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button variant="neobrutalism" size="sm">Hover Me</Button>
-                    </TooltipTrigger>
-                    <TooltipContent variant="neobrutalism">
-                      <p>Neobrutalism</p>
-                    </TooltipContent>
-                  </Tooltip>
-               </TooltipProvider>
-            </div>
-          </ComponentShowcase>
-
-          <ComponentShowcase title="Card" code={CARD_CODE} details={CARD_DETAILS}>
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                 <Card>
-                    <CardHeader>
-                      <CardTitle>Default</CardTitle>
-                      <CardDescription>Standard card style.</CardDescription>
-                    </CardHeader>
-                    <CardContent>Content area.</CardContent>
-                 </Card>
-                 
-                 <Card variant="neobrutalism">
-                    <CardHeader>
-                      <CardTitle>Neobrutalism</CardTitle>
-                    </CardHeader>
-                    <CardContent>Bold borders.</CardContent>
-                 </Card>
-
-                 <Card variant="brutal">
-                    <CardHeader>
-                      <CardTitle className="text-white">Brutal</CardTitle>
-                    </CardHeader>
-                    <CardContent className="text-white">Solid color blocks.</CardContent>
-                 </Card>
-
-                 <Card variant="ghost">
-                    <CardHeader>
-                      <CardTitle>Ghost</CardTitle>
-                    </CardHeader>
-                    <CardContent>No border, subtle background.</CardContent>
-                 </Card>
-
-                 <Card variant="interactive">
-                    <CardHeader>
-                      <CardTitle>Interactive</CardTitle>
-                    </CardHeader>
-                    <CardContent>Hover effects enabled.</CardContent>
-                 </Card>
-             </div>
-          </ComponentShowcase>
-
-          <ComponentShowcase title="Tabs" code={TABS_CODE} details={TABS_DETAILS}>
-             <div className="flex flex-col gap-8 w-full max-w-md">
-                <Tabs defaultValue="a">
-                  <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="a">Account</TabsTrigger>
-                    <TabsTrigger value="b">Password</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="a" className="p-4 border rounded-md mt-2">Account Content</TabsContent>
-                  <TabsContent value="b" className="p-4 border rounded-md mt-2">Password Content</TabsContent>
-                </Tabs>
-
-                <Tabs defaultValue="a" variant="underline">
-                  <TabsList className="w-full">
-                    <TabsTrigger value="a">Underline</TabsTrigger>
-                    <TabsTrigger value="b">Style</TabsTrigger>
-                  </TabsList>
-                </Tabs>
-
-                <Tabs defaultValue="a" variant="pills">
-                  <TabsList>
-                    <TabsTrigger value="a">Pills</TabsTrigger>
-                    <TabsTrigger value="b">Style</TabsTrigger>
-                  </TabsList>
-                </Tabs>
-                
-                <Tabs defaultValue="a" variant="enclosed">
-                   <TabsList>
-                    <TabsTrigger value="a">Enclosed</TabsTrigger>
-                    <TabsTrigger value="b">Style</TabsTrigger>
-                   </TabsList>
-                   <TabsContent value="a">Enclosed Content</TabsContent>
-                </Tabs>
-             </div>
-          </ComponentShowcase>
-
-          <ComponentShowcase title="Accordion" code={ACCORDION_CODE} details={ACCORDION_DETAILS}>
-             <div className="w-full max-w-md space-y-6">
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="item-1">
-                    <AccordionTrigger>Default Accordion</AccordionTrigger>
-                    <AccordionContent>Content goes here.</AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-
-                <Accordion type="single" collapsible variant="boxed">
-                  <AccordionItem value="item-1">
-                    <AccordionTrigger>Boxed Variant</AccordionTrigger>
-                    <AccordionContent>Content goes here.</AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="item-2">
-                    <AccordionTrigger>Another Item</AccordionTrigger>
-                    <AccordionContent>Content goes here.</AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-
-                 <Accordion type="single" collapsible variant="neobrutalism">
-                  <AccordionItem value="item-1">
-                    <AccordionTrigger>Neobrutalism</AccordionTrigger>
-                    <AccordionContent>Content goes here.</AccordionContent>
-                  </AccordionItem>
-                </Accordion>
+                <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button variant="ghost" size="icon"><Info className="h-5 w-5" /></Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Add to library</p>
+                      </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
              </div>
           </ComponentShowcase>
 
           <ComponentShowcase title="Breadcrumb" code={BREADCRUMB_CODE} details={BREADCRUMB_DETAILS}>
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="#">Home</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="#">Components</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
-          </ComponentShowcase>
-
-          <ComponentShowcase title="Alert" code={ALERT_CODE} details={ALERT_DETAILS}>
-             <div className="grid gap-4 w-full max-w-2xl">
-                <Alert>
-                  <Info className="h-4 w-4" />
-                  <AlertTitle>Default</AlertTitle>
-                  <AlertDescription>Standard info alert.</AlertDescription>
-                </Alert>
-                <Alert variant="destructive">
-                  <AlertTriangle className="h-4 w-4" />
-                  <AlertTitle>Destructive</AlertTitle>
-                  <AlertDescription>Critical error occurred.</AlertDescription>
-                </Alert>
-                <Alert variant="success">
-                  <Check className="h-4 w-4" />
-                  <AlertTitle>Success</AlertTitle>
-                  <AlertDescription>Operation completed successfully.</AlertDescription>
-                </Alert>
-                 <Alert variant="warning">
-                  <AlertTriangle className="h-4 w-4" />
-                  <AlertTitle>Warning</AlertTitle>
-                  <AlertDescription>Action requires attention.</AlertDescription>
-                </Alert>
-                <Alert variant="left-accent">
-                   <Info className="h-4 w-4" />
-                   <AlertTitle>Left Accent</AlertTitle>
-                   <AlertDescription>Styled with a left border.</AlertDescription>
-                </Alert>
-             </div>
-          </ComponentShowcase>
-
-          <ComponentShowcase title="Badge" code={BADGE_CODE} details={BADGE_DETAILS}>
-             <div className="flex flex-wrap gap-2">
-                <Badge>Default</Badge>
-                <Badge variant="secondary">Secondary</Badge>
-                <Badge variant="outline">Outline</Badge>
-                <Badge variant="destructive">Destructive</Badge>
-                <Badge variant="neutral">Neutral</Badge>
-                <Badge variant="success">Success</Badge>
-                <Badge variant="warning">Warning</Badge>
-                <Badge variant="info">Info</Badge>
-                <Badge variant="neobrutalism">Neo</Badge>
-             </div>
-             <div className="flex flex-wrap gap-2 mt-4">
-                <Badge variant="soft-success">Soft Success</Badge>
-                <Badge variant="soft-warning">Soft Warning</Badge>
-                <Badge variant="soft-info">Soft Info</Badge>
-                <Badge variant="soft-destructive">Soft Destructive</Badge>
-             </div>
+             <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/components">Components</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
           </ComponentShowcase>
 
           <ComponentShowcase title="Avatar" code={AVATAR_CODE} details={AVATAR_DETAILS}>
-             <div className="flex items-center gap-8">
+             <div className="flex gap-4 items-center">
                 <Avatar>
                   <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <Avatar shape="square">
-                   <AvatarImage src="https://github.com/vercel.png" />
-                   <AvatarFallback>VC</AvatarFallback>
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <AvatarGroup>
-                   <Avatar><AvatarFallback>A</AvatarFallback></Avatar>
-                   <Avatar><AvatarFallback>B</AvatarFallback></Avatar>
-                   <Avatar><AvatarFallback>+2</AvatarFallback></Avatar>
+                    <Avatar><AvatarImage src="https://github.com/shadcn.png" /></Avatar>
+                    <Avatar><AvatarImage src="https://github.com/shadcn.png" /></Avatar>
+                    <Avatar><AvatarFallback>+3</AvatarFallback></Avatar>
                 </AvatarGroup>
              </div>
           </ComponentShowcase>
 
-          <ComponentShowcase title="Progress" code={PROGRESS_CODE} details={PROGRESS_DETAILS}>
-             <div className="flex flex-col gap-6 w-full max-w-md">
-                <Progress value={33} />
-                <Progress value={66} variant="neobrutalism" />
-             </div>
-          </ComponentShowcase>
-
-          <ComponentShowcase title="Skeleton" code={SKELETON_CODE} details={SKELETON_DETAILS}>
-             <div className="flex items-center space-x-4">
-                <Skeleton variant="circle" className="h-12 w-12" />
+          <ComponentShowcase title="Progress & Skeleton" code={PROGRESS_CODE} details={PROGRESS_DETAILS}>
+             <div className="w-full max-w-md space-y-8">
                 <div className="space-y-2">
-                  <Skeleton className="h-4 w-[250px]" />
-                  <Skeleton className="h-4 w-[200px]" />
+                    <Label>Progress</Label>
+                    <Progress value={66} />
+                </div>
+                <div className="space-y-2">
+                    <Label>Skeleton</Label>
+                    <div className="flex items-center space-x-4">
+                      <Skeleton className="h-12 w-12 rounded-full" />
+                      <div className="space-y-2">
+                        <Skeleton className="h-4 w-[250px]" />
+                        <Skeleton className="h-4 w-[200px]" />
+                      </div>
+                    </div>
                 </div>
              </div>
           </ComponentShowcase>
 
           <ComponentShowcase title="Separator" code={SEPARATOR_CODE} details={SEPARATOR_DETAILS}>
-             <div className="w-full max-w-md space-y-4">
-                <div className="text-sm font-medium">Standard</div>
-                <Separator />
-                <div className="text-sm font-medium">Dashed</div>
-                <Separator variant="dashed" />
-                <div className="text-sm font-medium">Dotted</div>
-                <Separator variant="dotted" />
+             <div>
+              <div className="space-y-1">
+                <h4 className="text-sm font-medium leading-none">Radix Primitives</h4>
+                <p className="text-sm text-muted-foreground">
+                  An open-source UI component library.
+                </p>
+              </div>
+              <Separator className="my-4" />
+              <div className="flex h-5 items-center space-x-4 text-sm">
+                <div>Blog</div>
+                <Separator orientation="vertical" />
+                <div>Docs</div>
+                <Separator orientation="vertical" />
+                <div>Source</div>
+              </div>
+            </div>
+          </ComponentShowcase>
+
+          {/* New Components */}
+          <ComponentShowcase title="Toast" code={TOAST_CODE} details={TOAST_DETAILS}>
+             <ToastDemo />
+          </ComponentShowcase>
+
+          <ComponentShowcase title="Input OTP" code={OTP_CODE} details={OTP_DETAILS}>
+             <div className="flex flex-col gap-6 items-center">
+                 <div className="space-y-2 text-center">
+                     <Label>Standard</Label>
+                     <InputOTP maxLength={6}>
+                        <InputOTPGroup>
+                            <InputOTPSlot index={0} />
+                            <InputOTPSlot index={1} />
+                            <InputOTPSlot index={2} />
+                        </InputOTPGroup>
+                        <InputOTPSeparator />
+                        <InputOTPGroup>
+                            <InputOTPSlot index={3} />
+                            <InputOTPSlot index={4} />
+                            <InputOTPSlot index={5} />
+                        </InputOTPGroup>
+                    </InputOTP>
+                 </div>
+
+                 <div className="space-y-2 text-center">
+                     <Label>Neobrutalism</Label>
+                     <InputOTP maxLength={4} variant="neobrutalism">
+                        <InputOTPGroup>
+                            <InputOTPSlot index={0} variant="neobrutalism" />
+                            <InputOTPSlot index={1} variant="neobrutalism" />
+                            <InputOTPSlot index={2} variant="neobrutalism" />
+                            <InputOTPSlot index={3} variant="neobrutalism" />
+                        </InputOTPGroup>
+                    </InputOTP>
+                 </div>
+                 
+                 <div className="space-y-2 text-center">
+                     <Label>Separated</Label>
+                     <InputOTP maxLength={4} variant="separated">
+                        <InputOTPGroup>
+                            <InputOTPSlot index={0} variant="separated" />
+                            <InputOTPSlot index={1} variant="separated" />
+                            <InputOTPSlot index={2} variant="separated" />
+                            <InputOTPSlot index={3} variant="separated" />
+                        </InputOTPGroup>
+                    </InputOTP>
+                 </div>
+             </div>
+          </ComponentShowcase>
+
+          <ComponentShowcase title="Data Table" code={TABLE_CODE} details={TABLE_DETAILS}>
+             <div className="w-full max-w-3xl">
+                 <div className="mb-8">
+                     <h4 className="mb-2 font-semibold">Default</h4>
+                     <Table>
+                      <TableCaption>A list of your recent invoices.</TableCaption>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="w-[100px]">Invoice</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead>Method</TableHead>
+                          <TableHead className="text-right">Amount</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="font-medium">INV-001</TableCell>
+                          <TableCell>Paid</TableCell>
+                          <TableCell>Credit Card</TableCell>
+                          <TableCell className="text-right">$250.00</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium">INV-002</TableCell>
+                          <TableCell>Pending</TableCell>
+                          <TableCell>PayPal</TableCell>
+                          <TableCell className="text-right">$150.00</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                 </div>
+
+                 <div>
+                     <h4 className="mb-2 font-semibold">Neobrutalism</h4>
+                     <Table variant="neobrutalism">
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Product</TableHead>
+                          <TableHead>Category</TableHead>
+                          <TableHead className="text-right">Price</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="font-medium">Keyboard</TableCell>
+                          <TableCell>Electronics</TableCell>
+                          <TableCell className="text-right">$99.00</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium">Mouse</TableCell>
+                          <TableCell>Electronics</TableCell>
+                          <TableCell className="text-right">$49.00</TableCell>
+                        </TableRow>
+                      </TableBody>
+                      <TableFooter>
+                        <TableRow>
+                          <TableCell colSpan={2}>Total</TableCell>
+                          <TableCell className="text-right">$148.00</TableCell>
+                        </TableRow>
+                      </TableFooter>
+                    </Table>
+                 </div>
              </div>
           </ComponentShowcase>
 
